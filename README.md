@@ -120,7 +120,8 @@ and thinking around agent fleets:
 Others adopting similar patterns:
 
 - [@bil0090's tweet](https://x.com/bil0090/status/2091257247284273659) — adopted
-  the fleet approach.
+  the fleet approach and open sourced it:
+  [Bil0000/agents-fleet](https://github.com/Bil0000/agents-fleet).
 - **[AgentsRoom](https://agentsroom.dev/ai-agent-fleet)** — Native desktop app
   as a "fleet control plane" for managing multiple AI coding agents. Centralized
   start/stop/pause, real-time status dashboards, Git worktree isolation per
@@ -178,7 +179,14 @@ network" case. This repo handles everything else:
 
 ## Research
 
-- [Remote/Cloud Dev Environments (Sep 2026)](research/remote-dev-environments.md)
-  — Survey of CDEs: managed services, self-hosted/OSS, IDE remote support,
-  infrastructure approaches. Covers GitHub Codespaces, Coder, DevPod, Eclipse
-  Che, devcontainer spec, Tailscale, Nix tooling, and more.
+- [Remote AI Agent Execution Infrastructure (Sep 2026)](research/0002-remote-agent-infrastructure.md)
+  — The actual research: fleet management tools (Herdr, amux, T3 Code, Omnara,
+  AgentsRoom, etc.), agent sandboxes (E2B, Fly Sprites, Modal, Daytona, Claude
+  Managed Agents), orchestration (Optio, Hermes, Orca, Warp Factories), DIY
+  patterns (Theo's fleet repo, tmux+Tailscale, spare Mac setups), cost analysis,
+  and 25+ community articles/videos/discussions.
+
+- [Remote/Cloud Dev Environments (Sep 2026)](research/0001-remote-dev-environments.md)
+  — Earlier survey of traditional CDEs (editors, IDEs, Codespaces, Coder,
+  DevPod, etc.). Useful background but not the core problem — "dev environment"
+  in 2026 means "where do my agents run," not "where do I edit code."
