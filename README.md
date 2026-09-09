@@ -170,7 +170,16 @@ tailnet, or a mix.
 The `homelab` and `codex-controls-mac` repos handle the "spare Mac on the local
 network" case. This repo handles everything else:
 
-- Orca Remote Server / SSH target configuration for cloud VMs
+- Remote agent execution setup for cloud VMs (SSH targets, persistent servers,
+  on-demand environments)
+- Agent orchestrator configuration for remote modes:
+  - **Orca**: Remote Server (`orca serve`), SSH worktrees, per-workspace Cloud
+    VMs via `orca.yaml`
+  - **T3 Code**: `t3 connect` (cloud tunnel), multi-machine load balancing
+    (auto-distributes threads across connected environments), Remote SSH
+    environments. See also
+    [T3 Brigade Fleet](https://github.com/escoffier-labs/t3-brigade-fleet) for
+    fleet-level dispatch across machines.
 - Optio deployment (Helm + K8s) on remote compute
 - Hermes cron on always-on remote infrastructure
 - Agent fleet management patterns (Theo-style fleet repo, AgentsRoom, etc.)
@@ -185,6 +194,11 @@ network" case. This repo handles everything else:
   Managed Agents), orchestration (Optio, Hermes, Orca, Warp Factories), DIY
   patterns (Theo's fleet repo, tmux+Tailscale, spare Mac setups), cost analysis,
   and 25+ community articles/videos/discussions.
+
+- [Autonomous Ticket-to-Merge Tools (Sep 2026)](research/0003-ticket-to-merge-tools.md)
+  — Tools like Optio that take a ticket, assign an agent, open a PR, watch CI,
+  handle review feedback, and iterate until merge. Covers Optio, Warp Factories,
+  Copilot Coding Agent, Jules, Devin, Cosine/Lumen, Factory, and more.
 
 - [Remote/Cloud Dev Environments (Sep 2026)](research/0001-remote-dev-environments.md)
   — Earlier survey of traditional CDEs (editors, IDEs, Codespaces, Coder,
