@@ -385,18 +385,20 @@ Tools managing the agent lifecycle beyond just running sessions.
 
 ### Theo's Fleet Repo Pattern
 
-Theo (t3.gg) manages 5+ machines with a git repo of markdown configs and skills, propagated via SSH over Tailscale.
+Theo (t3.gg) manages 5+ machines with a git repo of markdown configs and skills, propagated via SSH over Tailscale. The core idea: moving past a single assistant to treat concurrent AI execution as an organizational system requiring centralized configuration, status tracking, and work isolation.
 
 **Architecture**:
-- Git repo contains all machine configuration files
-- Skills organized hierarchically: `universal/` (synced to all machines), agent-specific folders, command-center-only skills
-- `provision-a-box` skill studies existing machine config and bash history to bootstrap new machines
-- HTML dashboard of the fleet showing machines, specs, roles, connection methods (color-coded tmux themes so SSH sessions are visually distinguishable)
-- `ccusage-fleet` script runs ccusage across all machines and aggregates usage numbers
+- **Two foundational files**: `agents.md` (personal letter to the agent — tone, workflow, expectations) and `claude.md` (technical config, rules, constraints). Models tone-match, so conversational instructions produce conversational responses.
+- **Inventory/computer metadata**: each machine's specs, role, OS, connection method, and installed tools described in markdown so agents understand the fleet topology.
+- Skills organized hierarchically: `universal/` (synced to all machines), agent-specific folders, command-center-only skills. Each skill has metadata specifying target machines.
+- `provision-a-box` skill: agent studied his config + bash history, wrote onboarding instructions, iterated until provisioning a new Linux box became a single repeatable operation.
+- HTML dashboard of the fleet showing machines, specs, roles, connection methods (color-coded tmux themes so SSH sessions are visually distinguishable).
+- `ccusage-fleet` script runs ccusage across all machines and aggregates usage numbers.
+- "Apply changes to the fleet" commits and pushes to propagate updates across all machines via SSH over Tailscale.
 
-**Key insight**: Theo spent 16 hours writing markdown files and cut his AI prompts to one sentence. The fleet repo pattern treats machine config as code, propagated via git over Tailscale SSH.
+**Key insight**: Theo spent 16 hours hand-writing markdown files and said it was 100% worth it — cut his prompts to one sentence. The fleet repo pattern treats machine config as code, propagated via git push.
 
-- **Notable**: [Theo on X about ccusage-fleet](https://x.com/theo/status/2083562305254822131) | [Theo on X about fleet configuration](https://x.com/theo/status/2072483470035820870) | [BigGo Finance coverage](https://finance.biggo.com/news/63e17fcb23548c16)
+- **Notable**: [Fleet repo structure (Threads)](https://www.threads.com/@readus_org/post/Db_QzsTjdNf/) | [Managing a Fleet of Claude Agents (Developers Digest)](https://www.developersdigest.tech/blog/managing-a-fleet-of-claude-agents) | [BigGo Finance coverage](https://finance.biggo.com/news/63e17fcb23548c16) | [Theo's 67 projects with GPT-5.6 (joaoqueiros.com)](https://www.ai.joaoqueiros.com/blog/gpt-5-6-theo-67-projects-built-kept-threw-away) | [Theo on X about ccusage-fleet](https://x.com/theo/status/2083562305254822131) | [Theo on X about fleet configuration](https://x.com/theo/status/2072483470035820870)
 
 ### tmux + Tailscale + SSH/Mosh
 

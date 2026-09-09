@@ -102,16 +102,22 @@ and thinking around agent fleets:
   worth it.
 
 - **Fleet repo architecture**
-  ([AGENTS.md breakdown](https://finance.biggo.com/podcast/63e17fcb23548c16))
-  — Manages 5 machines with a "fleet repo": a git repository of markdown config
-  files + a Vibe Proxy fork. Skills organized hierarchically: universal (all
-  machines), Claude-only, and command-center (leader machine only). Each skill
-  has metadata specifying target machines. "Apply changes to the fleet" commits
-  and pushes to propagate updates across all 5 machines via SSH over Tailscale.
-  Includes a provision-a-box skill (agent studied his config + bash history,
-  wrote onboarding instructions, iterated until provisioning a new Linux box
-  became a single repeatable operation) and an HTML fleet dashboard with
-  color-coded tmux themes per machine.
+  ([AGENTS.md breakdown](https://finance.biggo.com/news/63e17fcb23548c16),
+  [fleet repo structure](https://www.threads.com/@readus_org/post/Db_QzsTjdNf/),
+  [managing a fleet](https://www.developersdigest.tech/blog/managing-a-fleet-of-claude-agents))
+  — Manages 5 machines with a "fleet repo": a git repository with two
+  foundational files (`agents.md` and `claude.md`) plus inventory/computer
+  metadata describing each machine's specs, role, and connection method. Skills
+  organized hierarchically: universal (all machines), Claude-only, and
+  command-center (leader machine only). Each skill has metadata specifying
+  target machines. "Apply changes to the fleet" commits and pushes to propagate
+  updates across all 5 machines via SSH over Tailscale. The key shift is
+  treating concurrent AI execution as an organizational system — not a single
+  assistant but a fleet requiring centralized configuration, status tracking,
+  and work isolation. Includes a provision-a-box skill (agent studied his
+  config + bash history, wrote onboarding instructions, iterated until
+  provisioning a new Linux box became a single repeatable operation) and an HTML
+  fleet dashboard with color-coded tmux themes per machine.
 
 - **T3 Code** — Open-source "harness manager" (not an agent itself) that wraps
   Claude Code, Codex, Fable, etc. and exposes them over websocket to desktop,
