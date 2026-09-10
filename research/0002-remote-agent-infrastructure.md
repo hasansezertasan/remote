@@ -225,7 +225,7 @@ Services specifically built for running AI agent workloads in the cloud.
 - **Remote relevance**: Each VM has its own kernel, network stack, and disk (not a container). Fresh boots ~30ms, forks ~160ms inheriting exact disk/processes/memory.
 - **Pricing**: Not publicly disclosed.
 - **Open source**: No.
-- **Self-hostable**: No (managed cloud).
+- **Self-hostable**: Yes (single Rust binary runs on any KVM-capable Linux host).
 - **Key differentiator**: Sub-millisecond resume, VM forking (fork inherits parent's exact state), SSH-native persistent VMs.
 - **Link**: [boxd.sh](https://boxd.sh/) | [Agent sandboxes docs](https://docs.boxd.sh/agents/agent-sandboxes)
 - **Notable**: [Cloud dev environment guide](https://boxd.sh/blog/cloud-dev-environment-complete-guide/)
@@ -290,8 +290,8 @@ Services specifically built for running AI agent workloads in the cloud.
 - **What**: Composable APIs for building and deploying cloud-hosted agents at scale, with sandboxed execution, checkpointing, credential management, scoped permissions, and end-to-end tracing. Launched April 8, 2026 (public beta).
 - **Remote relevance**: First frontier model provider to own the infrastructure layer for agent execution. Each agent runs in a gVisor-isolated container. Network egress default-deny.
 - **Pricing**: Part of Claude Platform. Pricing via API usage.
-- **Open source**: No (managed platform). Self-hosted execution option available for compliance/data residency.
-- **Self-hostable**: Yes, self-hosted execution option exists.
+- **Open source**: No (managed platform).
+- **Self-hostable**: Split-plane. The agent loop (orchestration, context management, error recovery) stays on Anthropic infrastructure. Tool execution can run on customer infrastructure via self-hosted sandboxes (GA May 2026). Supported providers: Cloudflare, Daytona, Modal, Vercel, plus a custom sandbox client API for private cloud or air-gapped environments. ([Self-hosted sandboxes docs](https://platform.claude.com/docs/en/managed-agents/self-hosted-sandboxes))
 - **Key differentiator**: Developers don't write the agent loop, provision sandboxes, or wire up error recovery, checkpointing, or credential vaulting -- Anthropic handles it all.
 - **Link**: [platform.claude.com/docs/en/managed-agents/overview](https://platform.claude.com/docs/en/managed-agents/overview)
 - **Notable**: [Cloudflare integration announcement](https://blog.cloudflare.com/claude-managed-agents/) | [InfoQ coverage](https://www.infoq.com/news/2026/05/code-with-claude/) | [Pluto Security analysis](https://pluto.security/blog/inside-claude-managed-agents/)
@@ -394,7 +394,7 @@ Theo (t3.gg) manages 5+ machines with a git repo of markdown configs and skills,
 - `provision-a-box` skill: agent studied his config + bash history, wrote onboarding instructions, iterated until provisioning a new Linux box became a single repeatable operation.
 - HTML dashboard of the fleet showing machines, specs, roles, connection methods (color-coded tmux themes so SSH sessions are visually distinguishable).
 - `ccusage-fleet` script runs ccusage across all machines and aggregates usage numbers.
-- "Apply changes to the fleet" commits and pushes to propagate updates across all machines via SSH over Tailscale.
+- "Apply changes to the fleet" commits, pushes to the fleet repo, then SSHs into each machine over Tailscale to pull the latest changes (working-tree update, not just remote refs). Exact pull/checkout mechanics are not publicly documented — likely a `git pull` or post-receive hook on each machine.
 
 **Key insight**: Theo spent 16 hours hand-writing markdown files and said it was 100% worth it — cut his prompts to one sentence. The fleet repo pattern treats machine config as code, propagated via git push.
 
@@ -442,9 +442,9 @@ Multiple guides exist for turning a spare Mac into a dedicated agent server:
 - Always-on desktop PC running Linux VM host
 - Ubuntu Server VM with nested virtualization
 - Tailscale connecting all devices (free tier)
-- Claude Code and Codex CLI configured for maximum autonomy (`approval_policy: "never"`, `bypassPermissions` enabled)
+- Claude Code and Codex CLI configured for maximum autonomy (`approval_policy: "never"`, `bypassPermissions` enabled). **⚠️ Explicit opt-in trade-off**: these settings disable all command-approval controls. Only enable after: (1) creating a dedicated non-privileged OS account with no personal data, credentials, or cloud tokens, (2) restricting network egress to only required API endpoints, (3) ensuring the VM has no access to production infrastructure, and (4) treating the VM as fully disposable — work persists only via `git push` to a remote repository. This is not a recommended default; it is a conscious risk acceptance for isolated throwaway environments.
 - Git worktrees for parallel development
-- "The VM is supposed to be disposable" -- work persists via GitHub
+- "The VM is supposed to be disposable" -- work persists via GitHub (push frequently)
 - [domenic.me/agentic-coding-setup](https://domenic.me/agentic-coding-setup/)
 
 **Jakob Serlier's pragmatic notes (January 2026)**:
@@ -461,21 +461,21 @@ Multiple guides exist for turning a spare Mac into a dedicated agent server:
 
 | Title | Author/Source | Date | Link |
 |-------|--------------|------|------|
-| Remote Coding: Running AI Agents From Anywhere (The Full Stack) | Steven Gonsalvez, DEV Community | July 2026 | [link](https://dev.to/stevengonsalvez/remote-coding-running-ai-agents-from-anywhere-the-full-stack-4lji) |
-| My Agentic Coding Setup, July 2026 | Domenic Denicola | July 2026 | [link](https://domenic.me/agentic-coding-setup/) |
-| Long-running agent workflows: Background and Tools | Luke Turner | August 2026 | [link](https://blog.luketurner.org/posts/long-running-agent-workflows/) |
-| Pragmatic Notes on Running Dangerous AI Coding Agents in Cloud VMs | Jakob Serlier | January 2026 | [link](https://jakobs.dev/pragmatic-notes-running-dangerous-ai-agents-cloud-vms/) |
-| Running AI Coding Agents on Hetzner | Pere Villega | April 2026 | [link](https://perevillega.com/posts/2026-04-02-running-ai-coding-agents-on-hetzner/) |
-| How to Run Claude Code as an Autonomous Agent on a Mac Mini | Claw Labs, DEV Community | 2026 | [link](https://dev.to/clawlabs/how-to-run-claude-code-as-an-autonomous-agent-on-a-mac-mini-52n8) |
-| Setting Up a Spare Mac for Claude Code: The Full Remote Control Guide | Developers Digest | 2026 | [link](https://www.developersdigest.tech/blog/spare-mac-claude-code-control-guide) |
-| Keep Claude Code Agent Running 24/7 | MindStudio | 2026 | [link](https://www.mindstudio.ai/blog/keep-claude-code-agent-running-24-7/) |
-| How to control Claude Code from your phone (2026) | explainx.ai | August 2026 | [link](https://www.explainx.ai/blog/claude-code-mobile-remote-control-phone-guide-2026) |
-| AI Agent Sandboxing in 2026 | amux.io | 2026 | [link](https://amux.io/guides/ai-agent-sandboxing/) |
-| Setting Up a Remote Box for Agentic Coding | OpenReplay | July 2026 | [link](https://blog.openreplay.com/remote-box-agentic-coding-setup/) |
-| AI Agent Sandbox Infrastructure in 2026 | AgentMarketCap | April 2026 | [link](https://agentmarketcap.ai/blog/2026/04/07/ai-agent-sandbox-infrastructure-e2b-modal-daytona-fly-machines-secure-code-execution) |
-| Running AI Agents 24/7 in 2026: Local vs Cloud vs Managed | DeployAgents | 2026 | [link](https://www.deployagents.co/blog/running-ai-agents-24-7-in-2026-local-vs-cloud) |
-| The Code Agent Orchestra | Addy Osmani | 2026 | [link](https://addyosmani.com/blog/code-agent-orchestra/) |
-| Cheap VPS for AI Agents (2026) | Hermify | 2026 | [link](https://www.hermify.io/en/blog/cheap-vps-for-ai-agent) |
+| Remote Coding: Running AI Agents From Anywhere (The Full Stack) | Steven Gonsalvez, DEV Community | July 2026 | [source](https://dev.to/stevengonsalvez/remote-coding-running-ai-agents-from-anywhere-the-full-stack-4lji) |
+| My Agentic Coding Setup, July 2026 | Domenic Denicola | July 2026 | [source](https://domenic.me/agentic-coding-setup/) |
+| Long-running agent workflows: Background and Tools | Luke Turner | August 2026 | [source](https://blog.luketurner.org/posts/long-running-agent-workflows/) |
+| Pragmatic Notes on Running Dangerous AI Coding Agents in Cloud VMs | Jakob Serlier | January 2026 | [source](https://jakobs.dev/pragmatic-notes-running-dangerous-ai-agents-cloud-vms/) |
+| Running AI Coding Agents on Hetzner | Pere Villega | April 2026 | [source](https://perevillega.com/posts/2026-04-02-running-ai-coding-agents-on-hetzner/) |
+| How to Run Claude Code as an Autonomous Agent on a Mac Mini | Claw Labs, DEV Community | 2026 | [source](https://dev.to/clawlabs/how-to-run-claude-code-as-an-autonomous-agent-on-a-mac-mini-52n8) |
+| Setting Up a Spare Mac for Claude Code: The Full Remote Control Guide | Developers Digest | 2026 | [source](https://www.developersdigest.tech/blog/spare-mac-claude-code-control-guide) |
+| Keep Claude Code Agent Running 24/7 | MindStudio | 2026 | [source](https://www.mindstudio.ai/blog/keep-claude-code-agent-running-24-7/) |
+| How to control Claude Code from your phone (2026) | explainx.ai | August 2026 | [source](https://www.explainx.ai/blog/claude-code-mobile-remote-control-phone-guide-2026) |
+| AI Agent Sandboxing in 2026 | amux.io | 2026 | [source](https://amux.io/guides/ai-agent-sandboxing/) |
+| Setting Up a Remote Box for Agentic Coding | OpenReplay | July 2026 | [source](https://blog.openreplay.com/remote-box-agentic-coding-setup/) |
+| AI Agent Sandbox Infrastructure in 2026 | AgentMarketCap | April 2026 | [source](https://agentmarketcap.ai/blog/2026/04/07/ai-agent-sandbox-infrastructure-e2b-modal-daytona-fly-machines-secure-code-execution) |
+| Running AI Agents 24/7 in 2026: Local vs Cloud vs Managed | DeployAgents | 2026 | [source](https://www.deployagents.co/blog/running-ai-agents-24-7-in-2026-local-vs-cloud) |
+| The Code Agent Orchestra | Addy Osmani | 2026 | [source](https://addyosmani.com/blog/code-agent-orchestra/) |
+| Cheap VPS for AI Agents (2026) | Hermify | 2026 | [source](https://www.hermify.io/en/blog/cheap-vps-for-ai-agent) |
 
 ### YouTube Videos
 
@@ -508,12 +508,12 @@ Multiple guides exist for turning a spare Mac into a dedicated agent server:
 
 | Title | Source | Link |
 |-------|--------|------|
-| Best Tools to Run Multiple AI Coding Agents in Parallel (2026) | codeagentswarm.com | [link](https://www.codeagentswarm.com/en/guides/best-tools-to-run-multiple-ai-coding-agents) |
-| Best AI Agent Multiplexers Compared (2026): 12 Tools Ranked | amux.io | [link](https://amux.io/guides/best-ai-agent-multiplexers-2026/) |
-| Best Tools for Managing Parallel AI Coding Agents in 2026 | Nimbalyst | [link](https://nimbalyst.com/blog/best-agent-management-tools-2026/) |
-| The 6 Best AI Agent Sandbox Platforms (August 2026) | Mastra | [link](https://mastra.ai/articles/best-ai-agent-sandbox-platforms) |
-| AI Agent Deployment: Cloud Platforms Compared | Starmorph | [link](https://blog.starmorph.com/blog/ai-agent-deployment-cloud-platforms-compared) |
-| Best VPS for AI Agents in 2026 | CyberNews | [link](https://cybernews.com/vps/best-vps-for-ai-agents/) |
+| Best Tools to Run Multiple AI Coding Agents in Parallel (2026) | codeagentswarm.com | [source](https://www.codeagentswarm.com/en/guides/best-tools-to-run-multiple-ai-coding-agents) |
+| Best AI Agent Multiplexers Compared (2026): 12 Tools Ranked | amux.io | [source](https://amux.io/guides/best-ai-agent-multiplexers-2026/) |
+| Best Tools for Managing Parallel AI Coding Agents in 2026 | Nimbalyst | [source](https://nimbalyst.com/blog/best-agent-management-tools-2026/) |
+| The 6 Best AI Agent Sandbox Platforms (August 2026) | Mastra | [source](https://mastra.ai/articles/best-ai-agent-sandbox-platforms) |
+| AI Agent Deployment: Cloud Platforms Compared | Starmorph | [source](https://blog.starmorph.com/blog/ai-agent-deployment-cloud-platforms-compared) |
+| Best VPS for AI Agents in 2026 | CyberNews | [source](https://cybernews.com/vps/best-vps-for-ai-agents/) |
 
 ---
 
@@ -562,7 +562,7 @@ Multiple guides exist for turning a spare Mac into a dedicated agent server:
 | GCP Spot (Preemptible) | Up to 91% off | 30-second shutdown window |
 | Azure Spot | Up to 90% off | Variable eviction rates |
 
-**Suitability for agent workloads**: Coding agents that checkpoint state to git (commit frequently) can tolerate spot instance interruptions well. The agent restarts and picks up from the last commit. Not suitable for agents that need long uninterrupted sessions without checkpointing.
+**Suitability for agent workloads**: Coding agents that checkpoint state by pushing to a remote repository (commit and push frequently) can tolerate spot instance interruptions. The agent restarts on a new instance, clones, and picks up from the last pushed commit. Requires: (1) frequent `git push` not just local commits (local commits are lost when the VM is terminated), (2) a durable attached volume or remote repo, and (3) explicit restart/resume orchestration (the cloud provider does not automatically restart your agent). Not suitable for agents that need long uninterrupted sessions without checkpointing.
 
 ### Always-On vs On-Demand vs Managed
 
@@ -604,7 +604,6 @@ Multiple guides exist for turning a spare Mac into a dedicated agent server:
 | Mux (Coder) | Yes | Open source | Browser UI | No | Free | Cross-platform |
 | Apra Fleet | Yes | Apache-2.0 | MCP over SSH | No | Free (BYOK) | Cross-platform |
 | VibeTunnel | Yes | MIT | Browser-based | Via browser | Free | macOS/Linux |
-| T3 Code | Yes | Open source | `npx t3 connect`, Tailscale | Yes | Free (BYOK) | Cross-platform |
 
 ### Agent Sandbox Platforms
 
@@ -617,9 +616,9 @@ Multiple guides exist for turning a spare Mac into a dedicated agent server:
 | Fly Sprites | Firecracker microVM | Seconds | Yes (100GB) | No | No | Auto-idle |
 | Northflank | Kata/gVisor | Fast | Yes | Yes (H100) | BYOC/BYOK | $0.017/vCPU-hr |
 | Vercel Sandbox | Firecracker microVM | Fast | No | No | No | Free tier |
-| boxd | KVM microVM | 30ms boot, sub-ms resume | Yes | No | No | Unknown |
+| boxd | KVM microVM | 30ms boot, sub-ms resume | Yes | No | Yes (single binary) | Unknown |
 | Blaxel | microVM | Fast | Yes (perpetual standby) | No | No | Unknown |
-| Claude Managed Agents | gVisor container | N/A | Checkpointed | No | Yes (option) | Per-API-call |
+| Claude Managed Agents | gVisor container | N/A | Checkpointed | No | Split-plane (execution only) | Per-API-call |
 | Codex Cloud | Cloud sandbox | N/A | Per-task | No | No | ChatGPT sub |
 
 ### Orchestration & Workflow Tools
@@ -630,7 +629,7 @@ Multiple guides exist for turning a spare Mac into a dedicated agent server:
 | Hermes | Cron + persistent daemon | Yes | Model-agnostic | Open source |
 | Orca | Parallel agents + remote modes | Yes | 30+ CLI agents | MIT |
 | Superset | 100+ parallel agents | macOS app | Agent-agnostic | Source-available |
-| Warp Factories | 6-stage pipeline | No (cloud) | Claude Code, Codex, configurable | Proprietary |
+| Warp Factories | 6-stage pipeline | Yes (Enterprise VPC) | Claude Code, Codex, configurable | Proprietary |
 | Claude Remote Control | Session bridging | Runs locally | Claude Code | Proprietary |
 
 ---

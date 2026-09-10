@@ -13,7 +13,7 @@ As of mid-2026, the category has fragmented into three tiers:
 2. **Cloud coding agents** -- sandbox execution and PR creation, but lighter on intake and orchestration
 3. **Orchestrators** -- coordinate multiple agents in parallel but delegate the actual coding to external harnesses
 
-The merge decision remains the universal human boundary. Every tool in this document routes through human approval before code reaches production. The bottleneck has shifted from code generation to human review capacity.
+The merge decision is the default human boundary — most tools require human approval before code reaches production. Some (notably Warp Factories) allow organizational policy to permit direct merge without human review. The bottleneck has shifted from code generation to human review capacity.
 
 ---
 
@@ -74,7 +74,7 @@ A "foreman" orchestrator agent selects optimal models and harnesses for each sta
 
 **Open source / license:** Proprietary, closed source
 
-**Self-hostable:** Yes -- infrastructure-as-code model with factories defined as version-controlled YAML. Data sovereignty supported (zero-data-retention options).
+**Self-hostable:** Yes (Enterprise plan). Execution can run fully self-hosted inside your own VPC. Orchestration is a split-plane deployment: the factory definition lives in version-controlled YAML, execution moves onto your infrastructure. Enterprise plans also support customer-supplied inference and customer-owned storage (S3/GCS). ([Warp self-hosted setup](https://www.warp.dev/articles/how-to-set-up-self-hosted-software-factory))
 
 **Pricing:** Closed beta (August 2026). Qualified organizations receive $10,000 in complimentary factory usage.
 
@@ -175,7 +175,7 @@ Task assignment -> Planning -> Implementation (multi-file) -> Testing & debuggin
 - Site: https://cognition.ai
 - Product: https://devin.ai
 
-**Notable:** ~75% task completion rate. PR merge rate improved from 34% (2025) to 67% (2026). Raised >$1B at $26B valuation. Enterprise customers include Citi, Mercedes-Benz, Goldman Sachs. Cognizant partnership for enterprise scaling. The strongest autonomy claims in the market but also the most expensive for heavy use. The persistent browser is unique -- Devin can read docs, search Stack Overflow, and browse APIs during execution.
+**Notable:** ~75% task completion rate. PR merge rate improved from 34% (early 2025) to 67% (late 2025), per Cognition's November 2025 performance review. Raised >$1B at $26B valuation. Enterprise customers include Citi, Mercedes-Benz, Goldman Sachs. Cognizant partnership for enterprise scaling. The strongest autonomy claims in the market but also the most expensive for heavy use. The persistent browser is unique -- Devin can read docs, search Stack Overflow, and browse APIs during execution.
 
 ---
 
@@ -269,7 +269,38 @@ Task assignment (natural language) -> Planning -> Implementation -> Testing -> P
 
 ---
 
-### 9. Claude Managed Agents (Anthropic)
+### 9. OpenHands (formerly OpenDevin)
+
+**What it is:** Open-source autonomous AI software engineer that takes GitHub issues, plans approaches, writes code, runs tests, and prepares commits for review.
+
+**Pipeline stages:**
+Task intake -> Code reading -> Planning -> Implementation -> Dependency management -> Test execution -> Failure fixing -> Commit preparation
+
+**Ticket intake:** GitHub Issues, feature descriptions, bug reports, natural language specifications.
+
+**CI feedback loop:** Yes. Runs existing test suite, identifies failures, fixes them.
+
+**Review feedback handling:** Prepares clean commits for review. Human approval required.
+
+**Open source / license:** MIT
+
+**Self-hostable:** Yes. Containerized sandbox. Can also use their cloud.
+
+**Pricing:** Free (self-hosted). Cloud pricing not detailed.
+
+**Links:**
+- Repo: https://github.com/All-Hands-AI/OpenHands
+- Site: https://www.openhands.dev
+
+**Notable:** 72% SWE-Bench Verified score. Model-agnostic. The strongest open-source alternative to Devin. Formerly OpenDevin (rebranded late 2024). Active development with large community.
+
+---
+
+## Cloud Coding Agents
+
+Sandbox execution and PR creation, but lighter on intake and orchestration than full pipeline tools. These provide the execution substrate — some are infrastructure for building ticket-to-merge tools, others are end-user agents with simpler pipelines.
+
+### 10. Claude Managed Agents (Anthropic)
 
 **What it is:** Anthropic's hosted agent execution platform -- composable APIs for building and deploying cloud-hosted agents with sandboxed code execution, checkpointing, credential management, and tracing.
 
@@ -284,7 +315,7 @@ Agent definition (tasks, tools, guardrails) -> Orchestration -> Tool execution (
 
 **Open source / license:** Proprietary (Anthropic)
 
-**Self-hostable:** No. Runs on Anthropic infrastructure (gVisor-isolated containers, default-deny network egress).
+**Self-hostable:** Split-plane. Orchestration runs on Anthropic infrastructure. Tool execution can run on customer infrastructure via self-hosted sandboxes (GA May 2026) — supports Cloudflare, Daytona, Modal, Vercel, or custom sandbox API for private cloud/air-gapped environments. ([Self-hosted sandboxes docs](https://platform.claude.com/docs/en/managed-agents/self-hosted-sandboxes))
 
 **Pricing:** Standard Claude API token rates + $0.08/session-hour
 
@@ -296,7 +327,7 @@ Agent definition (tasks, tools, guardrails) -> Orchestration -> Tool execution (
 
 ---
 
-### 10. OpenAI Codex Cloud
+### 11. OpenAI Codex Cloud
 
 **What it is:** OpenAI's cloud-based autonomous coding agent built into ChatGPT -- reads repos, writes code across files, runs tests in sandboxes, creates PRs. Originally powered by codex-1 (o3-derivative), now runs on the GPT-5.6 series (Sol/Terra/Luna). GPT-5.4 retired from Codex on August 31, 2026.
 
@@ -328,7 +359,7 @@ Task assignment (ChatGPT conversation, GitHub bot, CLI) -> Sandbox execution -> 
 
 ---
 
-### 11. Cursor Cloud Agents
+### 12. Cursor Cloud Agents
 
 **What it is:** Cursor's cloud coding agents running on isolated VMs that build software, test it, record video demos, and produce merge-ready PRs.
 
@@ -351,34 +382,7 @@ Task assignment -> Repo clone in cloud VM -> Dependency installation -> Implemen
 - Site: https://cursor.com
 - Blog: https://www.cursor.com/blog
 
-**Notable:** 30% of Cursor's own merged PRs are created by these agents. Cursor acquired Graphite (stacked PRs, merge queue) in December 2025. $2B ARR, $29.3B valuation. The "Automations" feature (triggered by Slack/Linear/GitHub/PagerDuty/webhooks) is a notable step toward ticket-to-merge without leaving the IDE ecosystem.
-
----
-
-### 12. OpenHands (formerly OpenDevin)
-
-**What it is:** Open-source autonomous AI software engineer that takes GitHub issues, plans approaches, writes code, runs tests, and prepares commits for review.
-
-**Pipeline stages:**
-Task intake -> Code reading -> Planning -> Implementation -> Dependency management -> Test execution -> Failure fixing -> Commit preparation
-
-**Ticket intake:** GitHub Issues, feature descriptions, bug reports, natural language specifications.
-
-**CI feedback loop:** Yes. Runs existing test suite, identifies failures, fixes them.
-
-**Review feedback handling:** Prepares clean commits for review. Human approval required.
-
-**Open source / license:** MIT
-
-**Self-hostable:** Yes. Containerized sandbox. Can also use their cloud.
-
-**Pricing:** Free (self-hosted). Cloud pricing not detailed.
-
-**Links:**
-- Repo: https://github.com/All-Hands-AI/OpenHands
-- Site: https://www.openhands.dev
-
-**Notable:** 72% SWE-Bench Verified score. Model-agnostic. The strongest open-source alternative to Devin. Formerly OpenDevin (rebranded late 2024). Active development with large community.
+**Notable:** >35% of Cursor's own merged PRs are created by these agents (up from 30% at Feb 2026 launch, per CEO Michael Truell). Cursor acquired Graphite (stacked PRs, merge queue) in December 2025. $2B ARR, $29.3B valuation. The "Automations" feature (triggered by Slack/Linear/GitHub/PagerDuty/webhooks) is a notable step toward ticket-to-merge without leaving the IDE ecosystem.
 
 ---
 
@@ -475,14 +479,14 @@ Task intake -> Code reading -> Planning -> Implementation -> Dependency manageme
 | Tool | Full Pipeline | CI Feedback | Review Response | Ticket Intake | Open Source | Self-Host | Starting Price |
 |------|:---:|:---:|:---:|---|:---:|:---:|---|
 | **Optio** | Yes | Yes (auto-resume) | Yes (subtask agent) | GitHub, Linear, Jira, Notion, GitLab | MIT | Yes (K8s) | Free |
-| **Warp Factories** | Yes | Partial (computer-use verify) | Yes (review agent) | Slack, Linear, Jira, GitHub | No | Yes (YAML-defined) | Closed beta ($10K credit) |
+| **Warp Factories** | Yes | Partial (computer-use verify) | Yes (review agent) | Slack, Linear, Jira, GitHub | No | Yes (Enterprise VPC) | Closed beta ($10K credit) |
 | **GitHub Copilot Agent** | Yes | Yes (Actions sandbox) | Yes (iterates on feedback) | GitHub Issues only | No | No | $10/mo (Pro) |
 | **Google Jules** | Yes | Yes (runs tests, iterates) | Partial (PR only, no auto-response) | GitHub Issues, web | No | No | Free (15 tasks/day) |
 | **Devin** | Yes | Yes (sandbox + browser) | Yes (PR analysis) | Slack, Teams, GitHub, Linear, Jira, web | No | No | Free / $20/mo (Pro) |
 | **Cosine (Lumen)** | Partial | Partial (runs checks) | Partial (reviewable changes) | Web, IDE | No | Yes (air-gapped) | $20/seat/mo |
 | **Codegen (ClickUp)** | Yes | Yes (channel feedback) | Yes (line-by-line review) | ClickUp, Slack, Linear, Jira | No | Enterprise only | Deprecated standalone |
 | **Factory (Droids)** | Yes | Yes (tests + iterates) | Yes (adjustable autonomy) | Slack, Linear, Terminal, IDE, web | No | Enterprise only | $20/mo |
-| **Claude Managed Agents** | Infrastructure | Yes (error recovery) | Depends on agent | Programmatic API | No | No | API tokens + $0.08/session-hr |
+| **Claude Managed Agents** | Infrastructure | Yes (error recovery) | Depends on agent | Programmatic API | No | Split-plane (execution only) | API tokens + $0.08/session-hr |
 | **OpenAI Codex Cloud** | Yes | Yes (sandbox tests) | Yes (responds to tags) | ChatGPT, GitHub bot, CLI, IDE | CLI only (Apache 2.0) | No | $20/mo (Plus) |
 | **Cursor Cloud Agents** | Yes | Yes (iterates in VM) | Partial (screenshots/video) | IDE, Slack, Linear, GitHub, PagerDuty | No | No | $20/mo (Pro) |
 | **OpenHands** | Mostly | Yes (runs test suite) | Partial (clean commits) | GitHub Issues, NL specs | MIT | Yes | Free |
@@ -512,11 +516,11 @@ Task intake -> Code reading -> Planning -> Implementation -> Dependency manageme
 
 ### Industry Data Points
 
-- 75% of AI coding agents broke working code during CI workflows (2026 finding)
-- Devin PR merge rate: 34% (2025) -> 67% (2026)
-- 19.78% of top SWE-bench "solved" cases were semantically incorrect
-- 30% of Cursor's own merged PRs are created by their cloud agents
-- Augment Code reports 5-10x task speed-up on complex multi-file tasks, but "human review capacity does not scale"
+- 75% of AI coding agents introduced regressions (broke previously working code) during long-term CI maintenance cycles — SWE-CI benchmark, Alibaba/Sun Yat-sen University, March 2026. Evaluated 18 models across 100 Python repos over ~233 days each. Only two Claude Opus versions achieved >50% zero-regression rate. ([awesomeagents.ai](https://awesomeagents.ai/news/alibaba-swe-ci-ai-coding-agents-long-term-maintenance/))
+- Devin PR merge rate: 34% (early 2025) -> 67% (late 2025) — Cognition's November 2025 performance review. Also reported 4x faster problem solving and 2x resource efficiency improvement. ([cognition.ai](https://cognition.ai/blog/devin-annual-performance-review-2025))
+- 19.78% of top SWE-bench "solved" cases (2,184 of 11,041 patches from top-30 leaderboard agents) were semantically incorrect — passed original tests but failed strengthened test suites. SWE-ABS paper, 2026. Top agent's score dropped from 78.80% to 62.20%. ([arXiv:2603.00520](https://arxiv.org/abs/2603.00520))
+- &gt;35% of Cursor's own merged PRs are created by their cloud agents (up from 30% at Feb 2026 launch to 35%+ by April 2026). CEO Michael Truell confirmed. ([DevOps.com](https://devops.com/cursor-cloud-agents-get-their-own-computers-and-35-of-internal-prs-to-prove-it/))
+- Augment Code reports 5-10x task speed-up on complex multi-file tasks, but "human review capacity does not scale" — the bottleneck shifts from code generation to verification. ([augmentcode.com](https://www.augmentcode.com/guides/autonomous-engineering-loop))
 
 ---
 

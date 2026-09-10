@@ -10,7 +10,7 @@ This document surveys the landscape of remote and cloud development environments
 
 - **Thermal throttling**: Modern laptops pack 150W+ CPUs into thin chassis. Summer heat compounds the problem, causing throttling that silently kills developer productivity. ([Newegg, 2026](https://www.newegg.com/insider/the-critical-role-of-laptop-cooling-why-thermal-management-matters-more-than-ever-in-2026/))
 - **Onboarding cost**: Coder's 2023 CDE Adoption Report found orgs save ~40 hours per developer on time-to-first-commit, translating to ~$2M savings for a 2,000-person org. ([Coder Blog](https://coder.com/blog/cde-adoption-report-cloud-development-environments-the-next-frontier-of-programmi))
-- **Adoption rate**: 66% of large enterprises (2,000+ employees) already use CDEs. Gartner predicts 60% of cloud workloads will be built using CDEs by 2026. ([Gartner Peer Insights](https://www.gartner.com/reviews/market/cloud-development-environments))
+- **Adoption rate**: 66% of large enterprises (2,000+ employees) already use CDEs. Industry reports citing the Gartner 2023 Hype Cycle predict 60% of cloud workloads will be built using CDEs by 2026 — note: this figure is widely repeated by Coder and Gitpod/Ona but no direct Gartner publication has been identified as the primary source. ([Coder CDE Adoption Report](https://coder.com/blog/cde-adoption-report-cloud-development-environments-the-next-frontier-of-programmi))
 - **Agent convergence**: In 2026, the distinction between "dev environment" and "agent execution sandbox" is dissolving. Persistent-VM substrates are emerging as the convergence point for both human developers and AI agents. ([boxd blog](https://boxd.sh/blog/cloud-dev-environment-complete-guide/))
 - **Big tech precedent**: Uber (Devpods: 48 cores, 96GB RAM), Slack (EC2: 8-16 cores), Pipedrive (K8s "Devboxes" at 250 engineers) all run CDEs internally. ([Pragmatic Engineer](https://newsletter.pragmaticengineer.com/p/cloud-development-environments))
 
@@ -20,10 +20,10 @@ This document surveys the landscape of remote and cloud development environments
 
 | Solution | Type | Open Source | Self-Hostable | Pricing | Key Differentiator |
 |----------|------|-------------|---------------|---------|-------------------|
-| **GitHub Codespaces** | Managed SaaS | No | No | Free 120 core-hrs/mo; $0.18/hr compute, $0.07/GB-mo storage | Deepest GitHub integration |
+| **GitHub Codespaces** | Managed SaaS | No | No | Free 120 core-hrs/mo; $0.18/core-hour compute, $0.07/GB-mo storage | Deepest GitHub integration |
 | **Ona (ex-Gitpod)** | Acquired by OpenAI (June 2026) | Was partially (Flex) | Unknown post-acquisition | N/A (now part of OpenAI/Codex) | Powers Codex cloud execution |
 | **Google Cloud Workstations** | Managed SaaS | No | No | $0.20/hr cluster + per-resource; ~$75/dev/mo avg | GCP-native, enterprise compliance |
-| **AWS CodeCatalyst** | Managed SaaS | No | No | Included in CodeCatalyst; EC2-based | AWS ecosystem successor to Cloud9 |
+| **AWS CodeCatalyst** | Managed SaaS (legacy) | No | No | Included in CodeCatalyst; EC2-based | AWS ecosystem successor to Cloud9 (discontinued Nov 2025) |
 | **Coder** | Self-hosted | Yes (AGPL) | Yes | Community free; Premium custom | Infrastructure-agnostic Terraform templates |
 | **DevPod** | Client-side tool | Yes (MPL-2.0) | N/A (client-only) | Free | No server needed; any provider; devcontainer standard |
 | **Eclipse Che / OpenShift Dev Spaces** | Self-hosted | Yes (EPL-2.0) | Yes (K8s/OpenShift) | Che free; Dev Spaces with OpenShift subscription | Kubernetes-native, enterprise Red Hat support |
@@ -83,7 +83,7 @@ AWS's successor to Cloud9 (which stopped onboarding new customers July 2024). Pr
 - **Open source**: No
 - **Self-hostable**: No (AWS only)
 - **Key differentiator**: AWS ecosystem integration; SSH via Systems Manager; replaced Cloud9
-- **Note**: Cloud9 is deprecated for new customers as of July 2024. ([Scalarly](https://www.scalarly.com/startup-stack/aws-cloud9-the-cloud-based-ide-for-developers/))
+- **Status**: **Discontinued.** AWS stopped onboarding new customers on November 7, 2025 and announced no further feature development. Existing users retain access but the service is in maintenance mode. Cloud9 was already deprecated for new customers as of July 2024. ([Scalarly](https://www.scalarly.com/startup-stack/aws-cloud9-the-cloud-based-ide-for-developers/))
 - **Site**: [codecatalyst.aws](https://codecatalyst.aws/)
 
 ### JetBrains Gateway (Remote Development)
@@ -383,7 +383,7 @@ Based on the [boxd 2026 guide](https://boxd.sh/blog/cloud-dev-environment-comple
 | Code on GitHub, want easiest start | **GitHub Codespaces** |
 | Want open source, no vendor lock-in | **DevPod** (client-only) or **Coder** (server) |
 | Enterprise, need compliance/RBAC | **Coder Premium** or **Google Cloud Workstations** |
-| AWS shop | **AWS CodeCatalyst** Dev Environments |
+| AWS shop | **Coder** on AWS (CodeCatalyst is discontinued) |
 | Kubernetes-native org | **Eclipse Che** / **OpenShift Dev Spaces** |
 | Want full JetBrains IDE remotely | **JetBrains Gateway** + any backend (Coder, Codespaces, bare VM) |
 | Just need Nix-level reproducibility locally | **devenv** or **Devbox** |
