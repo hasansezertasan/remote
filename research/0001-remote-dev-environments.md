@@ -54,16 +54,16 @@ A cloud-hosted development environment that launches from any GitHub repository 
 - **Key differentiator**: Seamless GitHub integration; uses devcontainer.json standard; works in browser or local VS Code
 - **Site**: [github.com/features/codespaces](https://github.com/features/codespaces)
 
-### Ona (formerly Gitpod)
+### Ona (formerly Gitpod) — Acquired by OpenAI
 
-Gitpod rebranded to Ona in September 2025, pivoting from CDE to AI agent orchestration ("mission control for AI engineering agents").
+Gitpod rebranded to Ona in September 2025, pivoting from CDE to AI agent orchestration. **Acquired by OpenAI on June 11, 2026** to power Codex's cloud execution ("take on longer-running work, even when laptops are closed").
 
-- **Pricing**: Free tier ($10 one-time credit, 40 OCUs); Core from $20/mo; Enterprise custom with VPC deployment. ([Gitpod/Ona Pricing](https://preview.gitpod.io/pricing))
-- **Open source**: Gitpod Classic was open source; the self-hosted repo was archived April 2026. Ona/Flex is partially open.
-- **Self-hostable**: Yes (AWS, GCP via managed single-tenant deployment)
-- **Key differentiator**: AI agent platform with dev environment roots; OCU-based billing covers both env runtime and agent tokens
-- **Status**: Gitpod Classic pay-as-you-go shut down October 15, 2025. ([InfoQ](https://www.infoq.com/news/2025/09/gitpod-ona/), [The Register](https://www.theregister.com/software/2025/09/03/gitpod-rebrands-as-ona-now-an-ai-driven-dev-platform/295031))
-- **Site**: [gitpod.io](https://www.gitpod.io/) / [ona.com](https://www.ona.com)
+- **Pricing**: N/A (now part of OpenAI/Codex). Pre-acquisition plans (Free/$20 Core/Enterprise) are no longer independently available.
+- **Open source**: Gitpod Classic was open source; the self-hosted repo was archived April 2026. Ona/Flex was partially open; future under OpenAI is unclear.
+- **Self-hostable**: Gitpod Flex was self-hostable (AWS); post-acquisition status unknown.
+- **Key differentiator**: Enterprise governance (Ona Guardrails), autonomous background agents. Now powers Codex's cloud sandbox execution.
+- **History**: Gitpod Classic pay-as-you-go shut down October 15, 2025. ([InfoQ](https://www.infoq.com/news/2025/09/gitpod-ona/), [The Register](https://www.theregister.com/software/2025/09/03/gitpod-rebrands-as-ona-now-an-ai-driven-dev-platform/295031), [OpenAI acquisition](https://tech-insider.org/ie/openai-ona-acquisition-codex-2026/))
+- **Site**: [gitpod.io](https://www.gitpod.io/) (redirects to OpenAI)
 
 ### Google Cloud Workstations
 
