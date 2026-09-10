@@ -142,11 +142,11 @@ Matt's tweet replies):
 | Service | What it does | Notes |
 | --- | --- | --- |
 | [Omnara](https://omnara.dev) | Voice-first mobile/web command center, cloud handoff when machine goes offline | YC S25, Apple Watch support |
-| [Conductor](https://conductor.dev) | Mac app with isolated worktrees + Vercel Sandbox cloud workspaces | $22M raised, free currently |
+| [Conductor](https://www.conductor.build/) | Mac app with isolated worktrees + Vercel Sandbox cloud workspaces | $22M raised, free currently |
 | [Warp Factories](https://www.warp.dev) | Cloud control plane, live steering, local handoff via Factory MCP | Closed beta |
 | [Fleet (fleetctl.ai)](https://fleetctl.ai) | YAML-defined agent workflows, audit trails, per-agent budgets, Linux jails | Free 500 starts; $299/mo business |
 | [vibetunnel](https://github.com/nicedoc/vibetunnel) | Browser proxy for Mac terminal, asciinema recording | Free, 4.4k GitHub stars |
-| [Codeman](https://github.com/codeman-ai/codeman) | Self-hosted mission control: tmux sessions, browser streaming, auto-resume, REST API | MIT, free |
+| [Codeman](https://github.com/Ark0N/Codeman) | Self-hosted mission control: tmux sessions, browser streaming, auto-resume, REST API | MIT, free |
 | [amux](https://github.com/amux-ai/amux) | SQLite kanban, tmux per agent, web+mobile dashboard, self-healing | MIT, Rust binary |
 | [Claude Squad](https://github.com/smtg-ai/claude-squad) | TUI for tmux + worktrees, 7.9k stars | AGPL-3.0 |
 
