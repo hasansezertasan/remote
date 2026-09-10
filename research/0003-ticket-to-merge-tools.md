@@ -124,7 +124,7 @@ Task intake -> Plan (shown to developer, editable) -> Implementation (in cloud V
 
 **Ticket intake:** GitHub Issues, web interface. MCP integrations with Linear, Stitch, Neon, Tinybird, Context7, Supabase.
 
-**CI feedback loop:** Yes. Runs tests, sees failures, iterates. Android Studio CLI integration (GA) enables build/emulator/test-runner invocation. Jules "doesn't just generate code -- it actually runs the code, sees failing tests, iterates, and knows when it's wrong."
+**CI feedback loop:** Partial (runs tests in cloud VM sandbox before PR creation, sees failures, and iterates; does not monitor external post-PR CI). Android Studio CLI integration (GA) enables build/emulator/test-runner invocation. Jules "doesn't just generate code -- it actually runs the code, sees failing tests, iterates, and knows when it's wrong."
 
 **Review feedback handling:** Creates PRs for human review. Developer can steer the plan before, during, and after execution. No documented automatic response to PR review comments.
 
@@ -309,7 +309,7 @@ Agent definition (tasks, tools, guardrails) -> Orchestration -> Tool execution (
 
 **Ticket intake:** Programmatic via API. Not a direct ticket-to-PR tool -- it's infrastructure for *building* such tools. Sentry uses it to go "from a flagged bug to a reviewable fix in one flow."
 
-**CI feedback loop:** The agent harness handles error recovery and iteration. Self-evaluation and iteration in research preview.
+**CI feedback loop:** Depends on agent (infrastructure level handles execution error recovery; no built-in post-PR CI watcher). Self-evaluation and iteration in research preview.
 
 **Review feedback handling:** Depends on the agent built on top of it. The platform provides the execution substrate.
 
@@ -481,12 +481,12 @@ Task assignment -> Repo clone in cloud VM -> Dependency installation -> Implemen
 | **Optio** | Yes | Yes (auto-resume) | Yes (subtask agent) | GitHub, Linear, Jira, Notion, GitLab | MIT | Yes (K8s) | Free |
 | **Warp Factories** | Yes | Partial (computer-use verify) | Yes (review agent) | Slack, Linear, Jira, GitHub | No | Yes (Enterprise VPC) | Closed beta ($10K credit) |
 | **GitHub Copilot Agent** | Yes | Yes (Actions sandbox) | Yes (iterates on feedback) | GitHub Issues only | No | No | $10/mo (Pro) |
-| **Google Jules** | Yes | Yes (runs tests, iterates) | Partial (PR only, no auto-response) | GitHub Issues, web | No | No | Free (15 tasks/day) |
+| **Google Jules** | Yes | Partial (sandbox tests only, no post-PR CI) | Partial (PR only, no auto-response) | GitHub Issues, web | No | No | Free (15 tasks/day) |
 | **Devin** | Yes | Yes (sandbox + browser) | Yes (PR analysis) | Slack, Teams, GitHub, Linear, Jira, web | No | No | Free / $20/mo (Pro) |
 | **Cosine (Lumen)** | Partial | Partial (runs checks) | Partial (reviewable changes) | Web, IDE | No | Yes (air-gapped) | $20/seat/mo |
 | **Codegen (ClickUp)** | Yes | No (channel updates only) | Yes (line-by-line review) | ClickUp, Slack, Linear, Jira | No | Enterprise only | Deprecated standalone |
 | **Factory (Droids)** | Yes | Yes (tests + iterates) | Yes (adjustable autonomy) | Slack, Linear, Terminal, IDE, web | No | Enterprise only | $20/mo |
-| **Claude Managed Agents** | Infrastructure | Yes (error recovery) | Depends on agent | Programmatic API | No | Split-plane (execution only) | API tokens + $0.08/session-hr |
+| **Claude Managed Agents** | Infrastructure | Depends on agent (no built-in CI watcher) | Depends on agent | Programmatic API | No | Split-plane (execution only) | API tokens + $0.08/session-hr |
 | **OpenAI Codex Cloud** | Yes | Partial (sandbox only, no post-PR CI) | Yes (responds to tags) | ChatGPT, GitHub bot, CLI, IDE | CLI only (Apache 2.0) | No | $20/mo (Plus); $100-$200/mo (Pro) |
 | **Cursor Cloud Agents** | Yes | Yes (iterates in VM) | No (manual review; video/screenshot artifacts) | IDE, Slack, Linear, GitHub, PagerDuty | No | No | $20/mo (Pro) |
 | **OpenHands** | Mostly | Partial (sandbox tests only, no post-PR CI) | No (human review; clean commits) | GitHub Issues, NL specs | MIT | Yes | Free |
@@ -545,7 +545,7 @@ Task assignment -> Repo clone in cloud VM -> Dependency installation -> Implemen
 - You need the strongest autonomous capability (persistent browser, multi-day work)
 - Tasks require reading external documentation, browsing APIs
 - Enterprise compliance matters (Citi, Goldman Sachs, Mercedes-Benz use it)
-- Trade-off: Most expensive for heavy use; 25% failure rate means everything still needs review
+- Trade-off: Most expensive for heavy use; outputs still require thorough human review
 
 ### Pick Google Jules when:
 - You want the simplest task-based pricing model

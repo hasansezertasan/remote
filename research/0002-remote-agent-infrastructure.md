@@ -137,15 +137,15 @@ Tools for managing fleets of AI coding agents -- running, monitoring, and coordi
 - **Key differentiator**: Visual canvas approach rather than terminal-based. Good for planning and documentation alongside agent execution.
 - **Link**: [nimbalyst.com](https://nimbalyst.com/)
 
-### Mux (by Coder)
+### Xum (formerly Mux, by Coder)
 
-- **What**: Coder's open-source coding-agent multiplexer with desktop/browser UI, isolated runtimes, git divergence views, model routing, and review tooling.
+- **What**: Coder's open-source coding-agent multiplexer with desktop/browser UI, isolated runtimes, git divergence views, model routing, and review tooling. Renamed from Mux to Xum following a trademark concern from Mux.com.
 - **Remote relevance**: Browser UI enables remote access. Isolated runtimes prevent collisions across parallel agent work.
 - **Pricing**: Free, open-source.
-- **Open source**: Yes.
+- **Open source**: Yes (AGPL-3.0).
 - **Self-hostable**: Yes.
 - **Key differentiator**: From Coder (enterprise remote dev environment company), combines browser/desktop UI with isolated runtimes and model routing.
-- **Link**: [xum.coder.com](https://xum.coder.com/)
+- **Link**: [xum.coder.com](https://xum.coder.com/) (canonical domain; [mux.coder.com](https://mux.coder.com/) redirects here)
 
 ### Other Multiplexers
 
@@ -291,7 +291,7 @@ Services specifically built for running AI agent workloads in the cloud.
 - **Remote relevance**: First frontier model provider to own the infrastructure layer for agent execution. Each agent runs in a gVisor-isolated container. Network egress default-deny.
 - **Pricing**: Part of Claude Platform. Pricing via API usage.
 - **Open source**: No (managed platform).
-- **Self-hostable**: Split-plane. The agent loop (orchestration, context management, error recovery) stays on Anthropic infrastructure. Tool execution can run on customer infrastructure via self-hosted sandboxes (GA May 2026). Supported providers: Cloudflare, Daytona, Modal, Vercel, plus a custom sandbox client API for private cloud or air-gapped environments. ([Self-hosted sandboxes docs](https://platform.claude.com/docs/en/managed-agents/self-hosted-sandboxes))
+- **Self-hostable**: Split-plane. The agent loop (orchestration, context management, error recovery) stays on Anthropic infrastructure. Tool execution can run on customer infrastructure via self-hosted sandboxes (GA May 2026) — supports Cloudflare, Daytona, Modal, Vercel, or a custom sandbox API for customer-controlled execution environments. Workers still poll Anthropic's control plane and submit results to it; this is not an air-gapped deployment. ([Self-hosted sandboxes docs](https://platform.claude.com/docs/en/managed-agents/self-hosted-sandboxes))
 - **Key differentiator**: Developers don't write the agent loop, provision sandboxes, or wire up error recovery, checkpointing, or credential vaulting -- Anthropic handles it all.
 - **Link**: [platform.claude.com/docs/en/managed-agents/overview](https://platform.claude.com/docs/en/managed-agents/overview)
 - **Notable**: [Cloudflare integration announcement](https://blog.cloudflare.com/claude-managed-agents/) | [InfoQ coverage](https://www.infoq.com/news/2026/05/code-with-claude/) | [Pluto Security analysis](https://pluto.security/blog/inside-claude-managed-agents/)
@@ -601,7 +601,7 @@ Multiple guides exist for turning a spare Mac into a dedicated agent server:
 | amux | Yes | MIT | Dashboard + mobile push | Yes | Free | Cross-platform |
 | Paneflow | Yes | Open source | Limited | No | Free | Linux/macOS/Windows |
 | Vibe Kanban | Yes | Apache-2.0 | Local only (post-shutdown) | No | Free | Cross-platform |
-| Mux (Coder) | Yes | Open source | Browser UI | No | Free | Cross-platform |
+| Xum (Coder) | Yes | AGPL-3.0 | Browser UI | No | Free | Cross-platform |
 | Apra Fleet | Yes | Apache-2.0 | MCP over SSH | No | Free (BYOK) | Cross-platform |
 | VibeTunnel | Yes | MIT | Browser-based | Via browser | Free | macOS/Linux |
 
