@@ -34,7 +34,7 @@ This document surveys the landscape of remote and cloud development environments
 | **Bunnyshell** | Managed SaaS | No | No (runs on your K8s) | $0.007/min; BYOC model | Full environment lifecycle with preview envs per PR |
 | **DevPanel** | Managed + Self-hosted | Community edition free | Yes (BYOC) | Community free; managed custom | WordPress/CMS focus; BYOC model |
 | **Diploi** | Managed SaaS | No | No | EUR 0.026-0.182/hr; EUR 50 signup credit | Visual stack builder; dev-to-deploy integration |
-| **boxd** | Managed + Self-hostable | Single-binary self-host | Yes | Usage-based | Persistent VMs, copy-on-write fork, sub-ms resume |
+| **boxd** | Managed + Self-hostable | No | Yes | Usage-based | Persistent VMs, copy-on-write fork, sub-ms resume |
 | **ClackyAI** | Managed SaaS | No | No | Unknown | AI-native CDE; natural language dev |
 | **Devbox (Jetify)** | CLI tool | Yes (Apache-2.0) | N/A (local) | Free | Nix without learning Nix language |
 | **devenv (Cachix)** | CLI tool | Yes (MIT) | N/A (local) | Free | Nix-powered; 58+ languages, 42+ services |

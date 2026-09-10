@@ -44,8 +44,8 @@ Tools for managing fleets of AI coding agents -- running, monitoring, and coordi
 
 ### Conductor
 
-- **What**: macOS application for running multiple Claude Code and Codex agents in parallel with a visual dashboard and diff-first review UI.
-- **Remote relevance**: Runs agents on your own machine; designed for local parallel execution. Less suited to headless remote but usable via screen sharing.
+- **What**: macOS application for running multiple Claude Code and Codex agents in parallel with a visual dashboard and diff-first review UI. Cloud Workspaces (powered by Vercel Sandbox) run agents on remote VMs so they continue when the laptop closes.
+- **Remote relevance**: Cloud Workspaces automatically provision a Vercel Sandbox per agent (8-core CPU, 16 GB RAM, Amazon Linux 2023). Agents keep running in the cloud even when the Conductor app is closed. Also usable locally for parallel execution on your own Mac.
 - **Pricing**: Free (you pay only your API costs). Raised $22M in funding.
 - **Open source**: No.
 - **Self-hostable**: macOS only.
@@ -190,7 +190,7 @@ Services specifically built for running AI agent workloads in the cloud.
 
 - **What**: Composable computers for AI agents -- fast, stateful sandboxes provisioned in under 60ms.
 - **Remote relevance**: Purpose-built for AI agent code execution. Pivoted from CDE to agent sandbox in February 2025.
-- **Pricing**: $24M Series A (February 2026, FirstMark Capital). Enterprise-focused, compliance-first positioning for regulated industries.
+- **Pricing**: Not publicly disclosed; enterprise contracts. Compliance-first positioning for regulated industries. Funding: $24M Series A (February 2026, FirstMark Capital).
 - **Open source**: Was open-source; **moved to closed source in June 2026**, citing risk of AI-assisted vulnerability discovery. GitHub repo receives no further updates.
 - **Self-hostable**: Previously yes; now unclear given closed-source pivot.
 - **Key differentiator**: Sub-60ms provisioning, compliance-first for enterprises, full environment control (CPU, RAM, disk, OS).
@@ -278,7 +278,7 @@ Services specifically built for running AI agent workloads in the cloud.
 
 - **What**: Perpetual sandbox platform for production AI agent workloads with microVM isolation, perpetual standby, and zero idle compute cost.
 - **Remote relevance**: First-class sandbox provider in the OpenAI Agents SDK. Combines sandboxes, agent hosting, and MCP server hosting.
-- **Pricing**: Not publicly disclosed. Agent Runtime product expected Q2 2026.
+- **Pricing**: Not publicly disclosed. Agent Runtime still marked "Soon" on the website as of September 2026 (was expected Q2 2026; has not launched).
 - **Open source**: No.
 - **Self-hostable**: No. Lacks BYOC, compliance controls, GPU support.
 - **Key differentiator**: Integration as first-class provider in OpenAI Agents SDK, perpetual standby (zero idle cost), combined sandbox + agent + MCP hosting.
@@ -593,7 +593,7 @@ Multiple guides exist for turning a spare Mac into a dedicated agent server:
 |------|-----------|---------|---------------|--------|---------|----------|
 | AgentsRoom | No | Proprietary | Encrypted fleet view | Yes | Paid | Cross-platform |
 | Claude Squad | Yes | AGPL-3.0 | Via SSH/tmux | No | Free | Cross-platform |
-| Conductor | No | Proprietary | Limited | No | Free (BYOK) | macOS |
+| Conductor | No | Proprietary | Cloud Workspaces (Vercel Sandbox) | No | Free (BYOK) | macOS |
 | T3 Code | Yes | Open source | `npx t3 connect` | Yes (iOS/Android) | Free (BYOK) | Cross-platform |
 | Codeman | Yes | Open source | Web UI + tmux | Via web | Free | Cross-platform |
 | Omnara | Yes | Open source | Web + mobile + watch | Yes (Apple Watch) | Unknown | Cross-platform |
@@ -640,7 +640,8 @@ The landscape has stratified into clear layers:
 
 1. **Execution layer** (where agents physically run): Fly Sprites, E2B, Modal, Daytona, Northflank, Claude Managed Agents, Codex Cloud, or DIY VPS (Hetzner/Vultr)
 2. **Fleet management layer** (monitoring and controlling multiple agents): Herdr, amux, Claude Squad, T3 Code, Codeman, Omnara, AgentsRoom, Apra Fleet
-3. **Workflow/orchestration layer** (ticket-to-merge automation): Optio, Warp Factories, Hermes
+3. **Workflow/orchestration layer** (ticket-to-merge automation): Optio, Warp Factories
+   - **Scheduling/daemon layer**: Hermes (cron-based persistent agent, not ticket-to-merge)
 4. **Access layer** (reaching your agents remotely): Tailscale + SSH/Mosh, Claude Remote Control, T3 Connect, VibeTunnel
 
 The cheapest viable setup is **tmux + Tailscale + Hetzner CX22 (~€4/mo)** or **Oracle Cloud Always Free** for a single agent. The most polished self-hosted experience is **Orca or T3 Code with a spare Mac**. For zero-infrastructure overhead, **Claude Managed Agents** or **Codex Cloud** eliminate all infra management. For ticket-to-merge automation, **Optio on Kubernetes** is the open-source standard.

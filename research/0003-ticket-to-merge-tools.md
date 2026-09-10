@@ -218,7 +218,7 @@ Task assignment (via ClickUp) -> Planning with business context -> Implementatio
 
 **Ticket intake:** ClickUp tasks, Slack, Linear, Jira, GitHub via MCP. "Any team member can assign a task directly to a Codegen agent."
 
-**CI feedback loop:** Reports progress and requests feedback in existing team channels.
+**CI feedback loop:** No automated CI watch/resume loop. Reports progress and requests feedback in existing team channels (Slack, Linear, Jira), but does not monitor CI checks or auto-resume on failure.
 
 **Review feedback handling:** Built-in AI code review agent with line-by-line PR feedback.
 
@@ -346,9 +346,9 @@ Task assignment (ChatGPT conversation, GitHub bot, CLI) -> Sandbox execution -> 
 
 **Pricing:** Bundled with ChatGPT plans:
 - Plus: $20/mo (10-60 cloud tasks per 5-hour window)
-- Pro 5x: $100/mo
-- Pro 20x: $200/mo
-- Business/Enterprise: per-seat or custom
+- Pro: $100/mo (5x Plus limits)
+- Pro: $200/mo (20x Plus limits, includes unlimited Sora, Operator)
+- Business: $25/seat/mo; Enterprise: custom
 - OpenAI estimates $100-$200/developer/month average
 
 **Links:**
@@ -484,10 +484,10 @@ Task assignment -> Repo clone in cloud VM -> Dependency installation -> Implemen
 | **Google Jules** | Yes | Yes (runs tests, iterates) | Partial (PR only, no auto-response) | GitHub Issues, web | No | No | Free (15 tasks/day) |
 | **Devin** | Yes | Yes (sandbox + browser) | Yes (PR analysis) | Slack, Teams, GitHub, Linear, Jira, web | No | No | Free / $20/mo (Pro) |
 | **Cosine (Lumen)** | Partial | Partial (runs checks) | Partial (reviewable changes) | Web, IDE | No | Yes (air-gapped) | $20/seat/mo |
-| **Codegen (ClickUp)** | Yes | Yes (channel feedback) | Yes (line-by-line review) | ClickUp, Slack, Linear, Jira | No | Enterprise only | Deprecated standalone |
+| **Codegen (ClickUp)** | Yes | No (channel updates only) | Yes (line-by-line review) | ClickUp, Slack, Linear, Jira | No | Enterprise only | Deprecated standalone |
 | **Factory (Droids)** | Yes | Yes (tests + iterates) | Yes (adjustable autonomy) | Slack, Linear, Terminal, IDE, web | No | Enterprise only | $20/mo |
 | **Claude Managed Agents** | Infrastructure | Yes (error recovery) | Depends on agent | Programmatic API | No | Split-plane (execution only) | API tokens + $0.08/session-hr |
-| **OpenAI Codex Cloud** | Yes | Partial (sandbox only, no post-PR CI) | Yes (responds to tags) | ChatGPT, GitHub bot, CLI, IDE | CLI only (Apache 2.0) | No | $20/mo (Plus) |
+| **OpenAI Codex Cloud** | Yes | Partial (sandbox only, no post-PR CI) | Yes (responds to tags) | ChatGPT, GitHub bot, CLI, IDE | CLI only (Apache 2.0) | No | $20/mo (Plus); $100-$200/mo (Pro) |
 | **Cursor Cloud Agents** | Yes | Yes (iterates in VM) | Partial (screenshots/video) | IDE, Slack, Linear, GitHub, PagerDuty | No | No | $20/mo (Pro) |
 | **OpenHands** | Mostly | Yes (runs test suite) | Partial (clean commits) | GitHub Issues, NL specs | MIT | Yes | Free |
 | **Gastown** | Orchestrator only | No | No | Manual / Beads | MIT | Yes | Free (+~$100/hr tokens) |
