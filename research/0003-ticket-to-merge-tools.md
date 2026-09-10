@@ -298,7 +298,7 @@ Agent definition (tasks, tools, guardrails) -> Orchestration -> Tool execution (
 
 ### 10. OpenAI Codex Cloud
 
-**What it is:** OpenAI's cloud-based autonomous coding agent built into ChatGPT -- reads repos, writes code across files, runs tests in sandboxes, creates PRs. Powered by codex-1 (o3-derivative, now GPT-5.5).
+**What it is:** OpenAI's cloud-based autonomous coding agent built into ChatGPT -- reads repos, writes code across files, runs tests in sandboxes, creates PRs. Originally powered by codex-1 (o3-derivative), now runs on the GPT-5.6 series (Sol/Terra/Luna). GPT-5.4 retired from Codex on August 31, 2026.
 
 **Pipeline stages:**
 Task assignment (ChatGPT conversation, GitHub bot, CLI) -> Sandbox execution -> Code writing/testing -> PR creation
