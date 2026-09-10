@@ -21,7 +21,7 @@ This document surveys the landscape of remote and cloud development environments
 | Solution | Type | Open Source | Self-Hostable | Pricing | Key Differentiator |
 |----------|------|-------------|---------------|---------|-------------------|
 | **GitHub Codespaces** | Managed SaaS | No | No | Free 120 core-hrs/mo; $0.18/hr compute, $0.07/GB-mo storage | Deepest GitHub integration |
-| **Ona (ex-Gitpod)** | Managed + Self-hosted | Partially (Flex) | Yes (AWS/GCP) | Free $10 credit; Core from $20/mo; Enterprise custom | AI agent orchestration pivot |
+| **Ona (ex-Gitpod)** | Acquired by OpenAI (June 2026) | Was partially (Flex) | Unknown post-acquisition | N/A (now part of OpenAI/Codex) | Powers Codex cloud execution |
 | **Google Cloud Workstations** | Managed SaaS | No | No | $0.20/hr cluster + per-resource; ~$75/dev/mo avg | GCP-native, enterprise compliance |
 | **AWS CodeCatalyst** | Managed SaaS | No | No | Included in CodeCatalyst; EC2-based | AWS ecosystem successor to Cloud9 |
 | **Coder** | Self-hosted | Yes (AGPL) | Yes | Community free; Premium custom | Infrastructure-agnostic Terraform templates |
