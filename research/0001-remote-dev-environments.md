@@ -20,10 +20,10 @@ This document surveys the landscape of remote and cloud development environments
 
 | Solution | Type | Open Source | Self-Hostable | Pricing | Key Differentiator |
 |----------|------|-------------|---------------|---------|-------------------|
-| **GitHub Codespaces** | Managed SaaS | No | No | Free 120 core-hrs/mo; $0.18/core-hour compute, $0.07/GB-mo storage | Deepest GitHub integration |
+| **GitHub Codespaces** | Managed SaaS | No | No | Free 120 core-hrs/mo; $0.09/core-hour compute ($0.18/hr on 2-core), $0.07/GB-mo storage | Deepest GitHub integration |
 | **Ona (ex-Gitpod)** | Acquired by OpenAI (June 2026) | Was partially (Flex) | Unknown post-acquisition | N/A (now part of OpenAI/Codex) | Powers Codex cloud execution |
 | **Google Cloud Workstations** | Managed SaaS | No | No | $0.20/hr cluster + per-resource; ~$75/dev/mo avg | GCP-native, enterprise compliance |
-| **AWS CodeCatalyst** | Managed SaaS (legacy) | No | No | Included in CodeCatalyst; EC2-based | AWS ecosystem successor to Cloud9 (discontinued Nov 2025) |
+| **AWS CodeCatalyst** | Discontinued (historical) | No | No | Historical (was EC2-based / included in tier) | AWS ecosystem successor to Cloud9; closed to new users Nov 2025 |
 | **Coder** | Self-hosted | Yes (AGPL) | Yes | Community free; Premium custom | Infrastructure-agnostic Terraform templates |
 | **DevPod** | Client-side tool | Yes (MPL-2.0) | N/A (client-only) | Free | No server needed; any provider; devcontainer standard |
 | **Eclipse Che / OpenShift Dev Spaces** | Self-hosted | Yes (EPL-2.0) | Yes (K8s/OpenShift) | Che free; Dev Spaces with OpenShift subscription | Kubernetes-native, enterprise Red Hat support |
@@ -48,7 +48,7 @@ This document surveys the landscape of remote and cloud development environments
 
 A cloud-hosted development environment that launches from any GitHub repository with a single click.
 
-- **Pricing**: Free tier with 120 core-hours and 15GB storage/month (~60 hours on 2-core). Compute billed at $0.18/core-hour. Storage at $0.07/GB-month. ([GitHub Pricing](https://github.com/pricing))
+- **Pricing**: Free tier with 120 core-hours and 15GB storage/month (~60 hours on 2-core). Compute billed at $0.09/core-hour ($0.18/hour on 2-core). Storage at $0.07/GB-month. ([GitHub Pricing](https://github.com/pricing))
 - **Open source**: No (proprietary)
 - **Self-hostable**: No
 - **Key differentiator**: Seamless GitHub integration; uses devcontainer.json standard; works in browser or local VS Code
@@ -75,15 +75,15 @@ Managed cloud development environments on GCP infrastructure.
 - **Key differentiator**: Enterprise compliance, GCP-native integration, customizable machine types
 - **Site**: [cloud.google.com/workstations](https://cloud.google.com/workstations)
 
-### AWS CodeCatalyst Dev Environments
-
-AWS's successor to Cloud9 (which stopped onboarding new customers July 2024). Preconfigured, scalable cloud dev environments on EC2.
-
-- **Pricing**: Included in CodeCatalyst tiers. Default: 2-core, 4GB RAM, 16GB storage per environment. ([AWS Docs](https://docs.aws.amazon.com/cloud9/latest/user-guide/devenvironment-cloud9.title.html))
+### AWS CodeCatalyst Dev Environments (Historical)
+ 
+AWS's discontinued successor to Cloud9 (which stopped onboarding new customers July 2024). Preconfigured, scalable cloud dev environments on EC2.
+ 
+- **Pricing**: Historical: previously included in CodeCatalyst tiers (2-core, 4GB RAM, 16GB storage). Not available for new adoption. ([AWS Docs](https://docs.aws.amazon.com/cloud9/latest/user-guide/devenvironment-cloud9.title.html))
 - **Open source**: No
 - **Self-hostable**: No (AWS only)
 - **Key differentiator**: AWS ecosystem integration; SSH via Systems Manager; replaced Cloud9
-- **Status**: **Discontinued.** AWS stopped onboarding new customers on November 7, 2025 and announced no further feature development. Existing users retain access but the service is in maintenance mode. Cloud9 was already deprecated for new customers as of July 2024. ([Scalarly](https://www.scalarly.com/startup-stack/aws-cloud9-the-cloud-based-ide-for-developers/))
+- **Status**: **Discontinued / Historical.** AWS closed CodeCatalyst to new customers on November 7, 2025, ended active feature development, and provides data migration documentation. Cloud9 was deprecated for new customers as of July 2024. ([Scalarly](https://www.scalarly.com/startup-stack/aws-cloud9-the-cloud-based-ide-for-developers/))
 - **Site**: [codecatalyst.aws](https://codecatalyst.aws/)
 
 ### JetBrains Gateway (Remote Development)
@@ -152,8 +152,8 @@ Visual stack builder combining development and deployment.
 Persistent, forkable Linux VMs with sub-millisecond resume and SSH-first access.
 
 - **Pricing**: Usage-based (details on site)
-- **Open source**: Single-binary self-host option available
-- **Self-hostable**: Yes
+- **Open source**: No (proprietary; distributed as a single prebuilt binary)
+- **Self-hostable**: Yes (single-binary self-host option)
 - **Key differentiator**: KVM-based real VMs (not containers); copy-on-write forking in 100-200ms; sleep-to-near-zero cost
 - **Site**: [boxd.sh](https://boxd.sh/)
 
@@ -305,7 +305,7 @@ VS Code fork with AI features. Supports remote development via the same Remote-S
 Native SSH remoting built into Zed editor. UI runs locally; language servers, tasks, terminals run on the remote.
 
 - **How it works**: SSH ControlMaster multiplexing; headless Zed server on remote; daemon reconnects across connection drops
-- **Pricing**: Free (open source, GPL-3.0 for editor; AGPL-3.0 for server)
+- **Pricing**: Free (open source, GPL-3.0 for editor; GPL-3.0-or-later for remote server)
 - **Status**: Production-ready for SSH-to-Linux. Not yet at parity with VS Code Remote Containers for complex multi-container setups.
 - **Key differentiator**: Native (no extension needed); fastest editor; AI features work in remote sessions; collaboration is transparent
 - **Docs**: [zed.dev/blog/remote-development](https://zed.dev/blog/remote-development)

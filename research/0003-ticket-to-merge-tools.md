@@ -74,7 +74,7 @@ A "foreman" orchestrator agent selects optimal models and harnesses for each sta
 
 **Open source / license:** Proprietary, closed source
 
-**Self-hostable:** Yes (Enterprise plan). Execution can run fully self-hosted inside your own VPC. Orchestration is a split-plane deployment: the factory definition lives in version-controlled YAML, execution moves onto your infrastructure. Enterprise plans also support customer-supplied inference and customer-owned storage (S3/GCS). ([Warp self-hosted setup](https://www.warp.dev/articles/how-to-set-up-self-hosted-software-factory))
+**Self-hostable:** Yes (Enterprise plan). Managed self-hosted execution can run inside your VPC. The Warp control plane remains managed by Warp. Enterprise plans also support customer-supplied inference and customer-owned S3/GCS storage for supported data classes, such as transcripts, artifacts, and run attachments. ([Warp self-hosted setup](https://www.warp.dev/articles/how-to-set-up-self-hosted-software-factory))
 
 **Pricing:** Closed beta (August 2026). Qualified organizations receive $10,000 in complimentary factory usage.
 
@@ -143,7 +143,7 @@ Task intake -> Plan (shown to developer, editable) -> Implementation (in cloud V
 - Site: https://jules.google.com
 - Blog: https://blog.google/innovation-and-ai/models-and-research/google-labs/jules/
 
-**Notable:** Entered public beta March 2026, GA at Google I/O May 2026. Task-based pricing (not seat-based) is distinctive. Gmail accounts only -- no Google Workspace/enterprise support yet. Asynchronous-only, no IDE-embedded synchronous mode. Audio changelogs are a unique feature. Google is reportedly building "Jitro" as the next-gen successor. SWE-bench Verified score of 51.8% is notably lower than Claude Code's 80.8%.
+**Notable:** Entered public beta May 2025, reached GA August 2025. Task-based pricing (not seat-based) is distinctive. Gmail accounts only -- no Google Workspace/enterprise support yet. Asynchronous-only, no IDE-embedded synchronous mode. Audio changelogs are a unique feature. Google is reportedly building "Jitro" as the next-gen successor. SWE-bench Verified score of 51.8% is notably lower than Claude Code's 80.8%.
 
 ---
 
@@ -175,7 +175,7 @@ Task assignment -> Planning -> Implementation (multi-file) -> Testing & debuggin
 - Site: https://cognition.ai
 - Product: https://devin.ai
 
-**Notable:** ~75% task completion rate. PR merge rate improved from 34% (early 2025) to 67% (late 2025), per Cognition's November 2025 performance review. Raised >$1B at $26B valuation. Enterprise customers include Citi, Mercedes-Benz, Goldman Sachs. Cognizant partnership for enterprise scaling. The strongest autonomy claims in the market but also the most expensive for heavy use. The persistent browser is unique -- Devin can read docs, search Stack Overflow, and browse APIs during execution.
+**Notable:** PR merge rate improved from 34% (early 2025) to 67% (late 2025), per [Cognition's November 2025 performance review](https://cognition.ai/blog/devin-annual-performance-review-2025). Raised >$1B at $26B valuation. Enterprise customers include Citi, Mercedes-Benz, Goldman Sachs. Cognizant partnership for enterprise scaling. The strongest autonomy claims in the market but also the most expensive for heavy use. The persistent browser is unique -- Devin can read docs, search Stack Overflow, and browse APIs during execution.
 
 ---
 
@@ -278,21 +278,21 @@ Task intake -> Code reading -> Planning -> Implementation -> Dependency manageme
 
 **Ticket intake:** GitHub Issues, feature descriptions, bug reports, natural language specifications.
 
-**CI feedback loop:** Yes. Runs existing test suite, identifies failures, fixes them.
-
-**Review feedback handling:** Prepares clean commits for review. Human approval required.
-
+**CI feedback loop:** Partial (runs test suite in sandbox during execution; no automatic post-PR CI watcher).
+ 
+**Review feedback handling:** No (prepares clean commits for human review; no automated comment-response loop).
+ 
 **Open source / license:** MIT
-
+ 
 **Self-hostable:** Yes. Containerized sandbox. Can also use their cloud.
-
+ 
 **Pricing:** Free (self-hosted). Cloud pricing not detailed.
-
+ 
 **Links:**
 - Repo: https://github.com/All-Hands-AI/OpenHands
 - Site: https://www.openhands.dev
-
-**Notable:** 72% SWE-Bench Verified score. Model-agnostic. The strongest open-source alternative to Devin. Formerly OpenDevin (rebranded late 2024). Active development with large community.
+ 
+**Notable:** 53% SWE-Bench Verified score achieved with CodeAct 2.1 agent using Claude 3.5 Sonnet (late 2024). Supports multiple models (model-agnostic framework). The strongest open-source alternative to Devin. Formerly OpenDevin (rebranded late 2024). Active development with large community.
 
 ---
 
@@ -315,7 +315,7 @@ Agent definition (tasks, tools, guardrails) -> Orchestration -> Tool execution (
 
 **Open source / license:** Proprietary (Anthropic)
 
-**Self-hostable:** Split-plane. Orchestration runs on Anthropic infrastructure. Tool execution can run on customer infrastructure via self-hosted sandboxes (GA May 2026) — supports Cloudflare, Daytona, Modal, Vercel, or custom sandbox API for private cloud/air-gapped environments. ([Self-hosted sandboxes docs](https://platform.claude.com/docs/en/managed-agents/self-hosted-sandboxes))
+**Self-hostable:** Split-plane. Orchestration runs on Anthropic infrastructure. Tool execution can run on customer infrastructure via self-hosted sandboxes (GA May 2026) — supports Cloudflare, Daytona, Modal, Vercel, or a custom sandbox API for customer-controlled execution environments. Workers still poll Anthropic's control plane and submit results to it; this is not an air-gapped deployment. ([Self-hosted sandboxes docs](https://platform.claude.com/docs/en/managed-agents/self-hosted-sandboxes))
 
 **Pricing:** Standard Claude API token rates + $0.08/session-hour
 
@@ -370,7 +370,7 @@ Task assignment -> Repo clone in cloud VM -> Dependency installation -> Implemen
 
 **CI feedback loop:** Agent reads codebase, edits, runs terminal commands, watches output, iterates until done or hits guardrail.
 
-**Review feedback handling:** PRs include videos and screenshots as proof of work. Standard review flow.
+**Review feedback handling:** No (PRs include screenshots/video for human reviewers; standard manual review flow, no automated comment-response loop).
 
 **Open source / license:** Proprietary (Anysphere)
 
@@ -488,8 +488,8 @@ Task assignment -> Repo clone in cloud VM -> Dependency installation -> Implemen
 | **Factory (Droids)** | Yes | Yes (tests + iterates) | Yes (adjustable autonomy) | Slack, Linear, Terminal, IDE, web | No | Enterprise only | $20/mo |
 | **Claude Managed Agents** | Infrastructure | Yes (error recovery) | Depends on agent | Programmatic API | No | Split-plane (execution only) | API tokens + $0.08/session-hr |
 | **OpenAI Codex Cloud** | Yes | Partial (sandbox only, no post-PR CI) | Yes (responds to tags) | ChatGPT, GitHub bot, CLI, IDE | CLI only (Apache 2.0) | No | $20/mo (Plus); $100-$200/mo (Pro) |
-| **Cursor Cloud Agents** | Yes | Yes (iterates in VM) | Partial (screenshots/video) | IDE, Slack, Linear, GitHub, PagerDuty | No | No | $20/mo (Pro) |
-| **OpenHands** | Mostly | Yes (runs test suite) | Partial (clean commits) | GitHub Issues, NL specs | MIT | Yes | Free |
+| **Cursor Cloud Agents** | Yes | Yes (iterates in VM) | No (manual review; video/screenshot artifacts) | IDE, Slack, Linear, GitHub, PagerDuty | No | No | $20/mo (Pro) |
+| **OpenHands** | Mostly | Partial (sandbox tests only, no post-PR CI) | No (human review; clean commits) | GitHub Issues, NL specs | MIT | Yes | Free |
 | **Gastown** | Orchestrator only | No | No | Manual / Beads | MIT | Yes | Free (+~$100/hr tokens) |
 | **oh-my-claudecode** | Orchestrator only | No | No | Natural language | Yes | Yes | Free |
 | **SWE-agent** | Research only | No | No | GitHub Issues | MIT | Yes | Free |

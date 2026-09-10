@@ -192,7 +192,7 @@ Services specifically built for running AI agent workloads in the cloud.
 - **Remote relevance**: Purpose-built for AI agent code execution. Pivoted from CDE to agent sandbox in February 2025.
 - **Pricing**: Not publicly disclosed; enterprise contracts. Compliance-first positioning for regulated industries. Funding: $24M Series A (February 2026, FirstMark Capital).
 - **Open source**: Was open-source; **moved to closed source in June 2026**, citing risk of AI-assisted vulnerability discovery. GitHub repo receives no further updates.
-- **Self-hostable**: Previously yes; now unclear given closed-source pivot.
+- **Self-hostable**: No longer for the commercial platform (managed service / enterprise deployment); legacy open-source release (frozen at v0.190.0) remains runnable but unmaintained without security updates.
 - **Key differentiator**: Sub-60ms provisioning, compliance-first for enterprises, full environment control (CPU, RAM, disk, OS).
 - **Link**: [daytona.io](https://www.daytona.io/) | [GitHub](https://github.com/daytonaio/daytona)
 - **Notable**: [Latent Space podcast with CEO Ivan Burazin](https://www.latent.space/p/daytona) | [WorkOS interview](https://workos.com/blog/composable-computers-for-agents-daytona-ivan-burazin) | [Cerebral Valley profile](https://cerebralvalley.beehiiv.com/p/daytona-composable-computers-for-ai-agents)
@@ -363,7 +363,7 @@ Tools managing the agent lifecycle beyond just running sessions.
 - **Remote relevance**: Cloud-native agent pipelines. Customers choose coding models/harnesses (including Codex and Claude Code). Connects to Linear, Jira, Slack, Teams.
 - **Pricing**: Enterprise pricing (closed beta). Warp reports 718,000 active developers, 179,000 agents/day.
 - **Open source**: No.
-- **Self-hostable**: No (cloud platform).
+- **Self-hostable**: Split-plane (Enterprise plan). Managed execution can run inside your own VPC; the control plane remains managed by Warp.
 - **Key differentiator**: 6-stage orchestration layer. Warp's internal teams automate 20-30% of PRs using Factories. Comes with Warp Agent CLI (standalone, works in any terminal).
 - **Link**: [warp.dev](https://www.warp.dev/)
 - **Notable**: [Warp Agent CLI announcement](https://www.warp.dev/blog/introducing-the-warp-agent-cli-coding-agent) | [Enterprise DNA coverage](https://enterprisedna.co/resources/news/warp-factories-enterprise-ai-software-development-2026/)
