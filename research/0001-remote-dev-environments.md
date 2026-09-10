@@ -305,7 +305,7 @@ VS Code fork with AI features. Supports remote development via the same Remote-S
 Native SSH remoting built into Zed editor. UI runs locally; language servers, tasks, terminals run on the remote.
 
 - **How it works**: SSH ControlMaster multiplexing; headless Zed server on remote; daemon reconnects across connection drops
-- **Pricing**: Free (open source, AGPL for editor; GPL for server)
+- **Pricing**: Free (open source, GPL-3.0 for editor; AGPL-3.0 for server)
 - **Status**: Production-ready for SSH-to-Linux. Not yet at parity with VS Code Remote Containers for complex multi-container setups.
 - **Key differentiator**: Native (no extension needed); fastest editor; AI features work in remote sessions; collaboration is transparent
 - **Docs**: [zed.dev/blog/remote-development](https://zed.dev/blog/remote-development)

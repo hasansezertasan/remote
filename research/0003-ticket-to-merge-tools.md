@@ -336,7 +336,7 @@ Task assignment (ChatGPT conversation, GitHub bot, CLI) -> Sandbox execution -> 
 
 **Ticket intake:** ChatGPT conversation, GitHub bot, terminal CLI, IDE extension, computer-use via screen reading.
 
-**CI feedback loop:** Runs tests in sandboxed environment. Iterates on failures.
+**CI feedback loop:** Runs tests in sandboxed environment before PR creation. Iterates on sandbox failures. Does not monitor external CI (GitHub Actions, etc.) after the PR is opened.
 
 **Review feedback handling:** Can review PRs when tagged. Responds to review comments.
 
@@ -487,7 +487,7 @@ Task assignment -> Repo clone in cloud VM -> Dependency installation -> Implemen
 | **Codegen (ClickUp)** | Yes | Yes (channel feedback) | Yes (line-by-line review) | ClickUp, Slack, Linear, Jira | No | Enterprise only | Deprecated standalone |
 | **Factory (Droids)** | Yes | Yes (tests + iterates) | Yes (adjustable autonomy) | Slack, Linear, Terminal, IDE, web | No | Enterprise only | $20/mo |
 | **Claude Managed Agents** | Infrastructure | Yes (error recovery) | Depends on agent | Programmatic API | No | Split-plane (execution only) | API tokens + $0.08/session-hr |
-| **OpenAI Codex Cloud** | Yes | Yes (sandbox tests) | Yes (responds to tags) | ChatGPT, GitHub bot, CLI, IDE | CLI only (Apache 2.0) | No | $20/mo (Plus) |
+| **OpenAI Codex Cloud** | Yes | Partial (sandbox only, no post-PR CI) | Yes (responds to tags) | ChatGPT, GitHub bot, CLI, IDE | CLI only (Apache 2.0) | No | $20/mo (Plus) |
 | **Cursor Cloud Agents** | Yes | Yes (iterates in VM) | Partial (screenshots/video) | IDE, Slack, Linear, GitHub, PagerDuty | No | No | $20/mo (Pro) |
 | **OpenHands** | Mostly | Yes (runs test suite) | Partial (clean commits) | GitHub Issues, NL specs | MIT | Yes | Free |
 | **Gastown** | Orchestrator only | No | No | Manual / Beads | MIT | Yes | Free (+~$100/hr tokens) |

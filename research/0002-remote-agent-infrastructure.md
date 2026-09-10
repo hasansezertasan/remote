@@ -168,7 +168,7 @@ Tools for managing fleets of AI coding agents -- running, monitoring, and coordi
 - **Open source**: Yes.
 - **Self-hostable**: Yes.
 - **Key differentiator**: Browser-based terminal access without SSH config, Git Follow mode, session recording (asciinema), terminal-native not agent-specific.
-- **Link**: [vibetunnel on GitHub](https://github.com/topics/vibecoding) | [Medium article](https://medium.com/coding-nexus/vibetunnel-turns-any-browser-into-your-terminal-bf4c5b6baf8e)
+- **Link**: [github.com/nicedoc/vibetunnel](https://github.com/nicedoc/vibetunnel) | [Medium article](https://medium.com/coding-nexus/vibetunnel-turns-any-browser-into-your-terminal-bf4c5b6baf8e)
 
 ### Apra Fleet
 
