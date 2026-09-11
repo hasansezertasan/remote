@@ -234,7 +234,7 @@ Services specifically built for running AI agent workloads in the cloud.
 
 - **What**: Python-first serverless compute with gVisor-isolated containers, fast startup, and elastic GPU access.
 - **Remote relevance**: Code-first SDK (Python, Go, JS/TS) for defining infrastructure. 100,000+ concurrent sandboxes with full observability. SOC 2 Type II, HIPAA eligible.
-- **Pricing**: Pay-per-use. 10,000+ teams.
+- **Pricing**: Pay-per-use, billed per second ($0.0000131/core-s base, ~$0.024/vCPU-hr + $0.00000222/GiB-s, ~$0.008/GB-hr; Modal Sandboxes run at a 3x premium of ~$0.071/vCPU-hr). Free starter tier with $30/mo compute credit; Team plan $250/mo. 10,000+ teams.
 - **Open source**: No (managed platform).
 - **Self-hostable**: No.
 - **Key differentiator**: No YAML config (code-first), GPU support for acceleration workloads, gVisor isolation, massive concurrency (100k+ sandboxes).
@@ -258,7 +258,7 @@ Services specifically built for running AI agent workloads in the cloud.
 - **Remote relevance**: 2M+ isolated workloads monthly. Hit 100,000 concurrent 1-vCPU sandboxes in 24 seconds (June 2026 benchmark). BYOC deployment (run in your own cloud).
 - **Pricing**: CPU $0.01667/vCPU-hour, RAM $0.00833/GB-hour, H100 GPU $2.74/hour.
 - **Open source**: No.
-- **Self-hostable**: Yes via BYOC (Northflank manages Kubernetes on your cloud) or BYOK (your existing Kubernetes cluster).
+- **Self-hostable**: Split-plane / BYOC only (managed control plane with workloads on your cloud/Kubernetes via BYOC/BYOK). Not fully self-hostable standalone.
 - **Key differentiator**: Full-stack platform (not just sandboxes), BYOC/BYOK deployment, Kata Container + gVisor isolation options.
 - **Link**: [northflank.com](https://northflank.com/)
 - **Notable**: [Best agent cloud platforms comparison](https://northflank.com/blog/best-agent-cloud-platforms) | [Sandboxing guide](https://northflank.com/blog/how-to-sandbox-ai-agents)
@@ -442,7 +442,7 @@ Multiple guides exist for turning a spare Mac into a dedicated agent server:
 - Always-on desktop PC running Linux VM host
 - Ubuntu Server VM with nested virtualization
 - Tailscale connecting all devices (free tier)
-- Claude Code and Codex CLI configured for maximum autonomy (`approval_policy: "never"`, `bypassPermissions` enabled). **⚠️ Explicit opt-in trade-off**: these settings disable all command-approval controls. Only enable after: (1) creating a dedicated non-privileged OS account with no personal data, credentials, or cloud tokens, (2) restricting network egress to only required API endpoints, (3) ensuring the VM has no access to production infrastructure, and (4) treating the VM as fully disposable — work persists only via `git push` to a remote repository. This is not a recommended default; it is a conscious risk acceptance for isolated throwaway environments.
+- Claude Code and Codex CLI configured for maximum autonomy (`approval_policy: "never"`, `bypassPermissions` enabled). **⚠️ Explicit opt-in trade-off**: these settings disable all command-approval controls. Only enable after: (1) creating a dedicated non-privileged OS account with no personal data or production access, allowing only narrowly scoped agent API tokens and repository push credentials (e.g., fine-grained PAT or deploy key), (2) restricting network egress to only required API endpoints and Git remotes, (3) ensuring the VM has no access to production infrastructure, and (4) treating the VM as fully disposable — work persists only via `git push` to a remote repository. This is not a recommended default; it is a conscious risk acceptance for isolated throwaway environments.
 - Git worktrees for parallel development
 - "The VM is supposed to be disposable" -- work persists via GitHub (push frequently)
 - [domenic.me/agentic-coding-setup](https://domenic.me/agentic-coding-setup/)
@@ -529,8 +529,8 @@ Multiple guides exist for turning a spare Mac into a dedicated agent server:
 | **Hetzner** AX42 | Dedicated bare metal | 8C/16T, 64 GB DDR5 | ~€57/mo | Best price-to-performance for frequent use |
 | **Hetzner** CAX (ARM) | ARM Shared | Ampere Altra | <€4/mo | EU-only, excellent efficiency |
 | **Oracle Cloud** | Always Free | 4 OCPUs, 24 GB RAM | Free | ARM-only, capacity varies by region |
-| **Vultr** | Entry VPS | Variable | $2.50/mo+ | GPU options (A100, H100) available |
-| **DigitalOcean** | Droplet | Variable | $4/mo+ | Best managed Kubernetes for multi-agent |
+| **Vultr** | Cloud Compute | 2 vCPU, 4 GB RAM (starts at $2.50/mo for non-viable 512MB SKU) | ~$20–$24/mo | GPU options (A100, H100) available |
+| **DigitalOcean** | Basic Droplet | 2 vCPU, 4 GB RAM (starts at $4/mo for non-viable 512MB SKU) | ~$24/mo | Best managed Kubernetes for multi-agent |
 | **Contabo** VPS 10 | Shared | 4 vCPU, 8 GB RAM | ~€3.60/mo | Aggressive oversubscription |
 | **Hostinger** | VPS | Variable | $6.99/mo (24mo) | AI runtime templates, guided setup |
 
@@ -546,7 +546,7 @@ Multiple guides exist for turning a spare Mac into a dedicated agent server:
 |---------|--------------|------------|
 | **E2B** | $0.0504/vCPU-hr + $0.0162/GB-hr (Free tier with $100 credit; Pro $150/mo) | <200ms microVM boot |
 | **Daytona** | Enterprise contracts | <60ms provisioning |
-| **Modal** | Pay-per-use | gVisor containers, GPU support |
+| **Modal** | ~$0.024/vCPU-hr + ~$0.008/GB-hr base (sandboxes: ~$0.071/vCPU-hr); per-second billing | gVisor containers, GPU support |
 | **Fly.io Machines** | From $0.0028/hr (256MB base); ~$0.03/hr (4GB agent) | 35+ regions, <300ms boot |
 | **Fly.io Sprites** | Auto-idle billing | Persistent, 100GB NVMe, checkpoint/restore |
 | **Northflank** | $0.01667/vCPU-hr + $0.00833/GB-hr (~$0.05/hr for 1 vCPU/4GB) | 100k concurrent sandboxes |
@@ -580,7 +580,7 @@ Multiple guides exist for turning a spare Mac into a dedicated agent server:
 1. **For occasional agent use**: Oracle Cloud Always Free (4 OCPU, 24 GB ARM) or Hetzner CX22 (~€4/mo)
 2. **For daily multi-agent work**: Spare Mac Mini or Hetzner AX42 bare metal (~€57/mo)
 3. **For burst parallel work**: Fly.io Sprites (auto-idle billing) or spot instances
-4. **For enterprise/compliance**: Northflank BYOC or Claude Managed Agents (self-hosted option)
+4. **For enterprise/compliance**: Northflank BYOC or Claude Managed Agents (split-plane option)
 5. **For zero maintenance**: Claude Managed Agents or Codex Cloud (bundled with ChatGPT subscription)
 
 ---
@@ -595,7 +595,7 @@ Multiple guides exist for turning a spare Mac into a dedicated agent server:
 | Claude Squad | Yes | AGPL-3.0 | Via SSH/tmux | No | Free | Cross-platform |
 | Conductor | No | Proprietary | Cloud Workspaces (Vercel Sandbox) | No | Free (BYOK) | macOS |
 | T3 Code | Yes | Open source | `npx t3 connect` | Yes (iOS/Android) | Free (BYOK) | Cross-platform |
-| Codeman | Yes | Open source | Web UI + tmux | Via web | Free | Cross-platform |
+| Codeman | Yes | MIT | Web UI + tmux | Via web | Free | Cross-platform |
 | Omnara | Yes | Open source | Web + mobile + watch | Yes (Apple Watch) | Unknown | Cross-platform |
 | Herdr | Yes | Open source | Via SSH | No | Free | Cross-platform |
 | amux | Yes | MIT | Dashboard + mobile push | Yes | Free | Cross-platform |
@@ -611,7 +611,7 @@ Multiple guides exist for turning a spare Mac into a dedicated agent server:
 |----------|-----------|-----------|------------|-----|-----------|---------|
 | E2B | Firecracker microVM | <200ms | No (ephemeral) | No | No | $0.0504/vCPU-hr + $0.0162/GB-hr |
 | Daytona | Docker containers | <60ms | Yes | No | Was yes (now closed source) | Enterprise |
-| Modal | gVisor containers | Fast | No | Yes | No | Pay-per-use |
+| Modal | gVisor containers | Fast | No | Yes | No | ~$0.024/vCPU-hr + ~$0.008/GB-hr base (sandboxes ~$0.071/vCPU-hr) |
 | Fly Machines | KVM VM | <300ms | Yes | Yes | No | From $0.0028/hr (256MB); ~$0.03/hr (4GB) |
 | Fly Sprites | Firecracker microVM | Seconds | Yes (100GB) | No | No | Auto-idle |
 | Northflank | Kata/gVisor | Fast | Yes | Yes (H100) | BYOC/BYOK | $0.017/vCPU-hr + $0.008/GB-hr (~$0.05/hr) |
@@ -629,7 +629,7 @@ Multiple guides exist for turning a spare Mac into a dedicated agent server:
 | Hermes | Cron + persistent daemon | Yes | Model-agnostic | Open source |
 | Orca | Parallel agents + remote modes | Yes | 30+ CLI agents | MIT |
 | Superset | 100+ parallel agents | macOS app | Agent-agnostic | Source-available |
-| Warp Factories | 6-stage pipeline | Yes (Enterprise VPC) | Claude Code, Codex, configurable | Proprietary |
+| Warp Factories | 6-stage pipeline | Split-plane (Enterprise VPC) | Claude Code, Codex, configurable | Proprietary |
 | Claude Remote Control | Session bridging | Runs locally | Claude Code | Proprietary |
 
 ---

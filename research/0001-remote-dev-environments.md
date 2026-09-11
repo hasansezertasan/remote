@@ -23,7 +23,7 @@ This document surveys the landscape of remote and cloud development environments
 | **GitHub Codespaces** | Managed SaaS | No | No | Free 120 core-hrs/mo; $0.09/core-hour compute ($0.18/hr on 2-core), $0.07/GB-mo storage | Deepest GitHub integration |
 | **Ona (ex-Gitpod)** | Acquired by OpenAI (June 2026) | Was partially (Flex) | Unknown post-acquisition | N/A (now part of OpenAI/Codex) | Powers Codex cloud execution |
 | **Google Cloud Workstations** | Managed SaaS | No | No | $0.20/hr cluster + per-resource; ~$75/dev/mo avg | GCP-native, enterprise compliance |
-| **AWS CodeCatalyst** | Discontinued (historical) | No | No | Historical (was EC2-based / included in tier) | AWS ecosystem successor to Cloud9; closed to new users Nov 2025 |
+| **AWS CodeCatalyst** | Discontinued (historical) | No | No | Historical (was EC2-based / included in tier) | AWS ecosystem successor to Cloud9; closed to new users Nov 2024 |
 | **Coder** | Self-hosted | Yes (AGPL) | Yes | Community free; Premium custom | Infrastructure-agnostic Terraform templates |
 | **DevPod** | Client-side tool | Yes (MPL-2.0) | N/A (client-only) | Free | No server needed; any provider; devcontainer standard |
 | **Eclipse Che / OpenShift Dev Spaces** | Self-hosted | Yes (EPL-2.0) | Yes (K8s/OpenShift) | Che free; Dev Spaces with OpenShift subscription | Kubernetes-native, enterprise Red Hat support |
@@ -83,14 +83,14 @@ AWS's discontinued successor to Cloud9 (which stopped onboarding new customers J
 - **Open source**: No
 - **Self-hostable**: No (AWS only)
 - **Key differentiator**: AWS ecosystem integration; SSH via Systems Manager; replaced Cloud9
-- **Status**: **Discontinued / Historical.** AWS closed CodeCatalyst to new customers on November 7, 2025, ended active feature development, and provides data migration documentation. Cloud9 was deprecated for new customers as of July 2024. ([Scalarly](https://www.scalarly.com/startup-stack/aws-cloud9-the-cloud-based-ide-for-developers/))
+- **Status**: **Discontinued / Historical.** AWS closed CodeCatalyst to new customers on November 7, 2024, ended active feature development, and provides data migration documentation. Cloud9 was deprecated for new customers as of July 2024. ([Scalarly](https://www.scalarly.com/startup-stack/aws-cloud9-the-cloud-based-ide-for-developers/))
 - **Site**: [codecatalyst.aws](https://codecatalyst.aws/)
 
 ### JetBrains Gateway (Remote Development)
 
 JetBrains Gateway is a free thin client that connects to remote IDE backends running on any server.
 
-- **Pricing**: Gateway app is free. Requires a JetBrains IDE license ($199/yr individual, $719/yr business). Additional orchestration fees may apply for non-partner setups. ([JetBrains Remote Dev](https://www.jetbrains.com/remote-development/gateway/))
+- **Pricing**: Gateway app is free. Requires a compatible paid JetBrains IDE license on the remote host (e.g., IntelliJ IDEA Ultimate at ~$169–$199/yr individual, ~$599–$719/yr commercial, or All Products Pack; single-language IDEs like PyCharm Professional cost less). Additional orchestration fees may apply for non-partner setups. ([JetBrains Remote Dev](https://www.jetbrains.com/remote-development/gateway/))
 - **Open source**: No (proprietary)
 - **Self-hostable**: Yes (you host the backend on your infra)
 - **Key differentiator**: Full JetBrains IDE experience remotely; works with Coder, Codespaces, etc.
