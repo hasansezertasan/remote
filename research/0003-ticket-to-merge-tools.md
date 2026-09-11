@@ -124,9 +124,9 @@ Task intake -> Plan (shown to developer, editable) -> Implementation (in cloud V
 
 **Ticket intake:** GitHub Issues, web interface. MCP integrations with Linear, Stitch, Neon, Tinybird, Context7, Supabase.
 
-**CI feedback loop:** Partial (runs tests in cloud VM sandbox before PR creation, sees failures, and iterates; does not monitor external post-PR CI). Android Studio CLI integration (GA) enables build/emulator/test-runner invocation. Jules "doesn't just generate code -- it actually runs the code, sees failing tests, iterates, and knows when it's wrong."
+**CI feedback loop:** Yes (runs tests in cloud VM sandbox before PR creation, sees failures, and iterates; includes "CI Fixer" that automatically diagnoses and pushes remediations for failing GitHub Actions checks on Jules-created PRs). Android Studio CLI integration (GA) enables build/emulator/test-runner invocation. Jules "doesn't just generate code -- it actually runs the code, sees failing tests, iterates, and knows when it's wrong."
 
-**Review feedback handling:** Creates PRs for human review. Developer can steer the plan before, during, and after execution. No documented automatic response to PR review comments.
+**Review feedback handling:** Yes (reads and acts on PR comments mentioning `@Jules`, acknowledges feedback, and pushes commits implementing requested revisions; developer can also steer the plan before, during, and after execution).
 
 **Supported model:** Gemini (3 Flash on free tier, 3.1 Pro on paid tiers)
 
@@ -247,7 +247,7 @@ Task assignment (natural language) -> Planning -> Implementation -> Testing -> P
 
 **CI feedback loop:** Droids run tests and iterate. Posts 77.3% on Terminal-Bench 2.0.
 
-**Review feedback handling:** Adjustable autonomy from fully supervised to autonomous execution. Explicit permission model with review requirements.
+**Review feedback handling:** Partial (includes Review Droid that analyzes PR diffs and posts inline/summary review comments; adjustable autonomy from fully supervised to autonomous execution; automated iteration on human review comments is undocumented/manual).
 
 **Supported models:** Claude, GPT, Gemini, others. Model-agnostic -- any LLM, any IDE.
 
@@ -368,13 +368,13 @@ Task assignment -> Repo clone in cloud VM -> Dependency installation -> Implemen
 
 **Ticket intake:** Cursor IDE, Slack, Linear, GitHub, PagerDuty, generic webhooks. "Automations" enable always-on agents triggered by external events or schedules.
 
-**CI feedback loop:** Partial (runs terminal commands and tests in cloud VM sandbox during execution, watches output, and iterates; does not monitor external post-PR CI).
+**CI feedback loop:** Partial (runs terminal commands and tests in cloud VM sandbox during execution; supports post-PR GitHub Actions auto-fix on Teams, or on-demand by commenting `@cursor please fix the CI failures`).
 
-**Review feedback handling:** No (PRs include screenshots/video for human reviewers; standard manual review flow, no automated comment-response loop).
+**Review feedback handling:** Partial (responds to `@cursor` comments on PRs to push revisions; otherwise supplies video/screenshot demo artifacts for manual human review).
 
 **Open source / license:** Proprietary (Anysphere)
 
-**Self-hostable:** No
+**Self-hostable:** Split-plane (customer-managed execution). Self-hosted Cloud Agents run agent worker VMs inside the customer's own network/VPC for isolated execution and internal network access, while Cursor manages cloud inference and orchestration. ([Cursor self-hosted cloud agents](https://cursor.com/blog/self-hosted-cloud-agents))
 
 **Pricing:** Pro $20/mo (includes cloud runs). MAX mode has 20% surcharge. ~$0.30-$5 per task depending on complexity.
 
@@ -479,16 +479,16 @@ Task assignment -> Repo clone in cloud VM -> Dependency installation -> Implemen
 | Tool | Full Pipeline | CI Feedback | Review Response | Ticket Intake | Open Source | Self-Host | Starting Price |
 |------|:---:|:---:|:---:|---|:---:|:---:|---|
 | **Optio** | Yes | Yes (auto-resume) | Yes (subtask agent) | GitHub, Linear, Jira, Notion, GitLab | MIT | Yes (K8s) | Free |
-| **Warp Factories** | Yes | Partial (computer-use verify) | Yes (review agent) | Slack, Linear, Jira, GitHub | No | Yes (Enterprise VPC) | Closed beta ($10K credit) |
+| **Warp Factories** | Partial | Partial (computer-use verify) | Yes (review agent) | Slack, Linear, Jira, GitHub | No | Yes (Enterprise VPC) | Closed beta ($10K credit) |
 | **GitHub Copilot Agent** | Yes | Yes (Actions sandbox) | Yes (iterates on feedback) | GitHub Issues only | No | No | $10/mo (Pro) |
-| **Google Jules** | Partial | Partial (sandbox tests only, no post-PR CI) | Partial (PR only, no auto-response) | GitHub Issues, web | No | No | Free (15 tasks/day) |
+| **Google Jules** | Yes | Yes (GitHub Actions auto-remediation) | Yes (responds to @Jules PR comments) | GitHub Issues, web | No | No | Free (15 tasks/day) |
 | **Devin** | Yes | Yes (sandbox + browser) | Yes (PR analysis) | Slack, Teams, GitHub, Linear, Jira, web | No | No | Free / $20/mo (Pro) |
 | **Cosine (Lumen)** | Partial | Partial (runs checks) | Partial (reviewable changes) | Web, IDE | No | Yes (air-gapped) | $20/seat/mo |
-| **Codegen (ClickUp)** | Yes | No (channel updates only) | Yes (line-by-line review) | ClickUp, Slack, Linear, Jira | No | Enterprise only | Deprecated standalone |
-| **Factory (Droids)** | Yes | Yes (tests + iterates) | Yes (adjustable autonomy) | Slack, Linear, Terminal, IDE, web | No | Enterprise only | $20/mo |
+| **Codegen (ClickUp)** | Partial | No (channel updates only) | Yes (line-by-line review) | ClickUp, Slack, Linear, Jira | No | Enterprise only | Deprecated standalone |
+| **Factory (Droids)** | Partial | Yes (tests + iterates) | Partial (Review Droid posts feedback; auto-iteration undocumented) | Slack, Linear, Terminal, IDE, web | No | Enterprise only | $20/mo |
 | **Claude Managed Agents** | Infrastructure | Depends on agent (no built-in CI watcher) | Depends on agent | Programmatic API | No | Split-plane (execution only) | API tokens + $0.08/session-hr |
-| **OpenAI Codex Cloud** | Yes | Partial (sandbox only, no post-PR CI) | Yes (responds to tags) | ChatGPT, GitHub bot, CLI, IDE | CLI only (Apache 2.0) | No | $20/mo (Plus); $100-$200/mo (Pro) |
-| **Cursor Cloud Agents** | Partial | Partial (sandbox tests only, no post-PR CI) | No (manual review; video/screenshot artifacts) | IDE, Slack, Linear, GitHub, PagerDuty | No | No | $20/mo (Pro) |
+| **OpenAI Codex Cloud** | Partial | Partial (sandbox only, no post-PR CI) | Yes (responds to tags) | ChatGPT, GitHub bot, CLI, IDE | CLI only (Apache 2.0) | No | $20/mo (Plus); $100-$200/mo (Pro) |
+| **Cursor Cloud Agents** | Partial | Partial (sandbox + GitHub Actions auto-fix) | Partial (responds to @cursor comments) | IDE, Slack, Linear, GitHub, PagerDuty | No | Split-plane (customer execution) | $20/mo (Pro) |
 | **OpenHands** | Mostly | Partial (sandbox tests only, no post-PR CI) | No (human review; clean commits) | GitHub Issues, NL specs | MIT | Yes | Free |
 | **Gastown** | Orchestrator only | No | No | Manual / Beads | MIT | Yes | Free (+~$100/hr tokens) |
 | **oh-my-claudecode** | Orchestrator only | No | No | Natural language | Yes | Yes | Free |

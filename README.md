@@ -95,7 +95,7 @@ and thinking around agent fleets:
 
 - **"I made Claude smarter by writing it a letter"**
   ([LinkedIn repost](https://www.linkedin.com/posts/ct-lin-8b7a8318b_i-made-claude-smarter-by-writing-it-a-letter-share-7492945969274089474-UmuW/))
-  — Theo's `agents.md` starts with a personal letter ("I'm Theo. You're my
+  — Theo's `AGENTS.md` starts with a personal letter ("I'm Theo. You're my
   agent. We'll be working together a lot...") instead of a sparse config list.
   Models tone-match, so conversational instructions produce conversational
   responses. He spent 16 hours hand-writing markdown files and said it was 100%
@@ -106,7 +106,7 @@ and thinking around agent fleets:
   [fleet repo structure](https://www.threads.com/@readus_org/post/Db_QzsTjdNf/),
   [managing a fleet](https://www.developersdigest.tech/blog/managing-a-fleet-of-claude-agents))
   — Manages 5 machines with a "fleet repo": a git repository with two
-  foundational files (`agents.md` and `claude.md`) plus inventory/computer
+  foundational files (`AGENTS.md` and `CLAUDE.md`) plus inventory/computer
   metadata describing each machine's specs, role, and connection method. Skills
   organized hierarchically: universal (all machines), Claude-only, and
   command-center (leader machine only). Each skill has metadata specifying

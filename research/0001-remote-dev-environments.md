@@ -32,7 +32,7 @@ This document surveys the landscape of remote and cloud development environments
 | **Codeanywhere** | Managed SaaS | No | No | Free 20hrs; Basic $12/mo; Premium $29/mo | Browser IDE, 75+ languages |
 | **CodeSandbox** | Managed SaaS | No | No | Free tier; Pro from $12/user/mo; compute usage-based | Snapshot/forking-first; Together AI backed |
 | **Bunnyshell** | Managed SaaS | No | No (runs on your K8s) | $0.007/min; BYOC model | Full environment lifecycle with preview envs per PR |
-| **DevPanel** | Managed + Self-hosted | Community edition free | Yes (BYOC) | Community free; managed custom | WordPress/CMS focus; BYOC model |
+| **DevPanel** | Managed + Self-hosted | No (proprietary; free community tier) | Yes (BYOC) | Community free; managed custom | WordPress/CMS focus; BYOC model |
 | **Diploi** | Managed SaaS | No | No | EUR 0.026-0.182/hr; EUR 50 signup credit | Visual stack builder; dev-to-deploy integration |
 | **boxd** | Managed + Self-hostable | No | Yes | Usage-based | Persistent VMs, copy-on-write fork, sub-ms resume |
 | **ClackyAI** | Managed SaaS | No | No | Unknown | AI-native CDE; natural language dev |
@@ -182,7 +182,7 @@ AI-native cloud development environment using natural language interaction for f
 Cloud IDE platform with a BYOC (Bring Your Own Cloud) model, strong in WordPress/CMS ecosystems.
 
 - **Pricing**: Community Edition free (no user/site limits, BYOC). Managed plans custom. ([DevPanel](https://www.devpanel.com/))
-- **Open source**: Community edition
+- **Open source**: No (proprietary; provides a free Community Edition tier for BYOC)
 - **Self-hostable**: Yes (BYOC on AWS, Azure, DigitalOcean)
 - **Key differentiator**: BYOC model; strong CMS support; claims 80% hosting cost savings
 - **Site**: [devpanel.com](https://www.devpanel.com/)

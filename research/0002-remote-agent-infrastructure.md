@@ -24,7 +24,7 @@ Tools for managing fleets of AI coding agents -- running, monitoring, and coordi
 
 - **What**: Multi-agent terminal and IDE for piloting multiple AI coding projects in parallel, with remote fleet capabilities.
 - **Remote relevance**: Encrypted remote fleet view aggregates agents running across all your machines into one unified window. Each machine runs agents locally; AgentsRoom provides the control plane.
-- **Pricing**: Proprietary; pricing not publicly disclosed.
+- **Pricing**: Free download with BYOK (bring-your-own-keys); commercial/enterprise pricing not publicly disclosed.
 - **Open source**: No.
 - **Self-hostable**: Agents run locally on each machine; the fleet view connects them.
 - **Key differentiator**: 14 built-in roles, 230+ expert agents from The Agency (open-source MIT marketplace), mobile-desktop sync for controlling agents from your phone.
@@ -48,7 +48,7 @@ Tools for managing fleets of AI coding agents -- running, monitoring, and coordi
 - **Remote relevance**: Cloud Workspaces automatically provision a Vercel Sandbox per agent (8-core CPU, 16 GB RAM, Amazon Linux 2023). Agents keep running in the cloud even when the Conductor app is closed. Also usable locally for parallel execution on your own Mac.
 - **Pricing**: Free (you pay only your API costs). Raised $22M in funding.
 - **Open source**: No.
-- **Self-hostable**: macOS only.
+- **Self-hostable**: Local execution runs on the user's Mac (macOS app); remote Cloud Workspaces run on managed Vercel Sandbox infrastructure and are not self-hostable.
 - **Key differentiator**: Visual dashboard, each agent gets its own git worktree, diff-first review UI. Used by Linear, Vercel, Stripe, Notion.
 - **Link**: [conductor.build](https://www.conductor.build/)
 
@@ -388,7 +388,7 @@ Tools managing the agent lifecycle beyond just running sessions.
 Theo (t3.gg) manages 5+ machines with a git repo of markdown configs and skills, propagated via SSH over Tailscale. The core idea: moving past a single assistant to treat concurrent AI execution as an organizational system requiring centralized configuration, status tracking, and work isolation.
 
 **Architecture**:
-- **Two foundational files**: `agents.md` (personal letter to the agent — tone, workflow, expectations) and `claude.md` (technical config, rules, constraints). Models tone-match, so conversational instructions produce conversational responses.
+- **Two foundational files**: `AGENTS.md` (personal letter to the agent — tone, workflow, expectations) and `CLAUDE.md` (technical config, rules, constraints). Models tone-match, so conversational instructions produce conversational responses.
 - **Inventory/computer metadata**: each machine's specs, role, OS, connection method, and installed tools described in markdown so agents understand the fleet topology.
 - Skills organized hierarchically: `universal/` (synced to all machines), agent-specific folders, command-center-only skills. Each skill has metadata specifying target machines.
 - `provision-a-box` skill: agent studied his config + bash history, wrote onboarding instructions, iterated until provisioning a new Linux box became a single repeatable operation.
@@ -591,7 +591,7 @@ Multiple guides exist for turning a spare Mac into a dedicated agent server:
 
 | Tool | Open Source | License | Remote Access | Mobile | Pricing | Platform |
 |------|-----------|---------|---------------|--------|---------|----------|
-| AgentsRoom | No | Proprietary | Encrypted fleet view | Yes | Paid | Cross-platform |
+| AgentsRoom | No | Proprietary | Encrypted fleet view | Yes | Free download (BYOK) | Cross-platform |
 | Claude Squad | Yes | AGPL-3.0 | Via SSH/tmux | No | Free | Cross-platform |
 | Conductor | No | Proprietary | Cloud Workspaces (Vercel Sandbox) | No | Free (BYOK) | macOS |
 | T3 Code | Yes | Open source | `npx t3 connect` | Yes (iOS/Android) | Free (BYOK) | Cross-platform |
