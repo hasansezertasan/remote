@@ -31,7 +31,7 @@ This document surveys the landscape of remote and cloud development environments
 | **DevZero** | Managed SaaS | No | No | From $39.95/user/mo (may have pivoted) | Production-mirroring MicroVM environments |
 | **Codeanywhere** | Managed SaaS | No | No | Free 20hrs; Basic $12/mo; Premium $29/mo | Browser IDE, 75+ languages |
 | **CodeSandbox** | Managed SaaS | No | No | Free tier; Pro from $12/user/mo; compute usage-based | Snapshot/forking-first; Together AI backed |
-| **Bunnyshell** | Managed SaaS | No | No (runs on your K8s) | $0.007/min; BYOC model | Full environment lifecycle with preview envs per PR |
+| **Bunnyshell** | Managed SaaS | No | Split-plane / BYOC (runs on your K8s) | $0.007/min; BYOC model | Full environment lifecycle with preview envs per PR |
 | **DevPanel** | Managed + Self-hosted | No (proprietary; free community tier) | Yes (BYOC) | Community free; managed custom | WordPress/CMS focus; BYOC model |
 | **Diploi** | Managed SaaS | No | No | EUR 0.026-0.182/hr; EUR 50 signup credit | Visual stack builder; dev-to-deploy integration |
 | **boxd** | Managed + Self-hostable | No | Yes | Usage-based | Persistent VMs, copy-on-write fork, sub-ms resume |
@@ -133,7 +133,7 @@ Full environment lifecycle platform -- preview environments per PR, staging, rem
 
 - **Pricing**: $0.007/min; runs on your own Kubernetes clusters (BYOC). ([Bunnyshell](https://www.bunnyshell.com/))
 - **Open source**: No
-- **Self-hostable**: Runs on your K8s clusters
+- **Self-hostable**: Split-plane / BYOC (managed control plane with agent running on customer's Kubernetes clusters)
 - **Key differentiator**: Complete lifecycle (preview envs, staging, production, AI sandboxes, DORA metrics)
 - **Site**: [bunnyshell.com](https://www.bunnyshell.com/)
 

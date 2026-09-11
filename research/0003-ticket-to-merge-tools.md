@@ -68,7 +68,7 @@ A "foreman" orchestrator agent selects optimal models and harnesses for each sta
 
 **CI feedback loop:** Implementation agent uses computer-use capabilities for verification. Verification videos saved to PR descriptions. Specific CI retry behavior not documented.
 
-**Review feedback handling:** Dedicated review agent evaluates code. Options for direct merge or human review depending on organizational policy.
+**Review feedback handling:** Dedicated review agent evaluates code before merge; direct automated response to human reviewer feedback on opened PRs is undocumented. Options for direct merge or human review depending on organizational policy.
 
 **Supported agents:** Claude Code, open-weight models, custom configurations. Multi-model/multi-harness.
 
@@ -95,7 +95,7 @@ Planning (creates task checklist) -> Code Development (edits, tests, lints, push
 
 **Ticket intake:** GitHub Issues only. Assignable from github.com, GitHub Mobile, or GitHub CLI. The "Create Issue flow" preview lets Copilot also create issues.
 
-**CI feedback loop:** Yes. Runs automated tests and linters in the GitHub Actions sandbox. Iterates on failures within the session. Session logs visible in PR timeline.
+**CI feedback loop:** Partial (sandbox tests only, no post-PR CI). Runs automated tests and linters in the GitHub Actions sandbox during execution and iterates on failures within the session, but does not autonomously monitor post-PR CI status checks. Session logs visible in PR timeline.
 
 **Review feedback handling:** Yes. Reviewers can approve, comment, or request changes. Copilot iterates until approval. Constraint: the person who created the issue cannot be the final approver.
 
@@ -156,7 +156,7 @@ Task assignment -> Planning -> Implementation (multi-file) -> Testing & debuggin
 
 **Ticket intake:** Slack, Microsoft Teams, GitHub Issues, Linear, Jira, Devin web interface. GitHub/GitLab/Bitbucket for PR handling.
 
-**CI feedback loop:** Yes. Runs tests in its sandbox, reads documentation, installs dependencies, interprets error logs, iterates. Learns codebase patterns over time.
+**CI feedback loop:** Partial (sandbox tests only, no post-PR CI). Runs tests in its sandbox, reads documentation, installs dependencies, interprets error logs, and iterates during execution, but does not autonomously monitor post-PR CI status checks. Learns codebase patterns over time.
 
 **Review feedback handling:** Yes. Devin Review provides automated PR analysis. Handles review comments across GitHub, GitLab, and Bitbucket.
 
@@ -220,7 +220,7 @@ Task assignment (via ClickUp) -> Planning with business context -> Implementatio
 
 **CI feedback loop:** No automated CI watch/resume loop. Reports progress and requests feedback in existing team channels (Slack, Linear, Jira), but does not monitor CI checks or auto-resume on failure.
 
-**Review feedback handling:** Built-in AI code review agent with line-by-line PR feedback.
+**Review feedback handling:** Built-in AI code review agent generates line-by-line PR feedback, but does not provide an automated response loop to iterate on human reviewer feedback.
 
 **Open source / license:** Proprietary (ClickUp)
 
@@ -245,7 +245,7 @@ Task assignment (natural language) -> Planning -> Implementation -> Testing -> P
 
 **Ticket intake:** Terminal, Slack, Linear, web interface, VS Code, JetBrains, Vim.
 
-**CI feedback loop:** Droids run tests and iterate. Posts 77.3% on Terminal-Bench 2.0.
+**CI feedback loop:** Partial (sandbox tests only, no post-PR CI). Droids run tests and iterate in the execution environment before PR creation; automated monitoring or resumption after post-PR external CI failures is undocumented. Posts 77.3% on Terminal-Bench 2.0.
 
 **Review feedback handling:** Partial (includes Review Droid that analyzes PR diffs and posts inline/summary review comments; adjustable autonomy from fully supervised to autonomous execution; automated iteration on human review comments is undocumented/manual).
 
@@ -479,17 +479,17 @@ Task assignment -> Repo clone in cloud VM -> Dependency installation -> Implemen
 | Tool | Full Pipeline | CI Feedback | Review Response | Ticket Intake | Open Source | Self-Host | Starting Price |
 |------|:---:|:---:|:---:|---|:---:|:---:|---|
 | **Optio** | Yes | Yes (auto-resume) | Yes (subtask agent) | GitHub, Linear, Jira, Notion, GitLab | MIT | Yes (K8s) | Free |
-| **Warp Factories** | Partial | Partial (computer-use verify) | Yes (review agent) | Slack, Linear, Jira, GitHub | No | Yes (Enterprise VPC) | Closed beta ($10K credit) |
-| **GitHub Copilot Agent** | Yes | Yes (Actions sandbox) | Yes (iterates on feedback) | GitHub Issues only | No | No | $10/mo (Pro) |
+| **Warp Factories** | Partial | Partial (computer-use verify) | No (review agent evaluates code; human response undocumented) | Slack, Linear, Jira, GitHub | No | Yes (Enterprise VPC) | Closed beta ($10K credit) |
+| **GitHub Copilot Agent** | Partial | Partial (Actions sandbox tests only, no post-PR CI) | Yes (iterates on feedback) | GitHub Issues only | No | No | $10/mo (Pro) |
 | **Google Jules** | Yes | Yes (GitHub Actions auto-remediation) | Yes (responds to @Jules PR comments) | GitHub Issues, web | No | No | Free (15 tasks/day) |
-| **Devin** | Yes | Yes (sandbox + browser) | Yes (PR analysis) | Slack, Teams, GitHub, Linear, Jira, web | No | No | Free / $20/mo (Pro) |
+| **Devin** | Partial | Partial (sandbox tests only, no post-PR CI) | Yes (PR analysis) | Slack, Teams, GitHub, Linear, Jira, web | No | No | Free / $20/mo (Pro) |
 | **Cosine (Lumen)** | Partial | Partial (runs checks) | Partial (reviewable changes) | Web, IDE | No | Yes (air-gapped) | $20/seat/mo |
-| **Codegen (ClickUp)** | Partial | No (channel updates only) | Yes (line-by-line review) | ClickUp, Slack, Linear, Jira | No | Enterprise only | Deprecated standalone |
-| **Factory (Droids)** | Partial | Yes (tests + iterates) | Partial (Review Droid posts feedback; auto-iteration undocumented) | Slack, Linear, Terminal, IDE, web | No | Enterprise only | $20/mo |
+| **Codegen (ClickUp)** | Partial | No (channel updates only) | No (generates line-by-line review; human response undocumented) | ClickUp, Slack, Linear, Jira | No | Enterprise only | Deprecated standalone |
+| **Factory (Droids)** | Partial | Partial (sandbox tests only, no post-PR CI) | Partial (Review Droid posts feedback; auto-iteration undocumented) | Slack, Linear, Terminal, IDE, web | No | Enterprise only | $20/mo |
 | **Claude Managed Agents** | Infrastructure | Depends on agent (no built-in CI watcher) | Depends on agent | Programmatic API | No | Split-plane (execution only) | API tokens + $0.08/session-hr |
 | **OpenAI Codex Cloud** | Partial | Partial (sandbox only, no post-PR CI) | Yes (responds to tags) | ChatGPT, GitHub bot, CLI, IDE | CLI only (Apache 2.0) | No | $20/mo (Plus); $100-$200/mo (Pro) |
 | **Cursor Cloud Agents** | Partial | Partial (sandbox + GitHub Actions auto-fix) | Partial (responds to @cursor comments) | IDE, Slack, Linear, GitHub, PagerDuty | No | Split-plane (customer execution) | $20/mo (Pro) |
-| **OpenHands** | Mostly | Partial (sandbox tests only, no post-PR CI) | No (human review; clean commits) | GitHub Issues, NL specs | MIT | Yes | Free |
+| **OpenHands** | Partial | Partial (sandbox tests only, no post-PR CI) | No (human review; clean commits) | GitHub Issues, NL specs | MIT | Yes | Free |
 | **Gastown** | Orchestrator only | No | No | Manual / Beads | MIT | Yes | Free (+~$100/hr tokens) |
 | **oh-my-claudecode** | Orchestrator only | No | No | Natural language | Yes | Yes | Free |
 | **SWE-agent** | Research only | No | No | GitHub Issues | MIT | Yes | Free |

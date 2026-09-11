@@ -26,7 +26,7 @@ Tools for managing fleets of AI coding agents -- running, monitoring, and coordi
 - **Remote relevance**: Encrypted remote fleet view aggregates agents running across all your machines into one unified window. Each machine runs agents locally; AgentsRoom provides the control plane.
 - **Pricing**: Free download with BYOK (bring-your-own-keys); commercial/enterprise pricing not publicly disclosed.
 - **Open source**: No.
-- **Self-hostable**: Agents run locally on each machine; the fleet view connects them.
+- **Self-hostable**: Split architecture: agent execution is local on customer machines, but the remote fleet control plane / encrypted relay is managed by AgentsRoom (no customer-deployable relay is documented).
 - **Key differentiator**: 14 built-in roles, 230+ expert agents from The Agency (open-source MIT marketplace), mobile-desktop sync for controlling agents from your phone.
 - **Link**: [agentsroom.dev](https://agentsroom.dev/)
 - **Notable**: [Remote Fleet feature page](https://agentsroom.dev/features/remote-fleet) | [AI Coding Swarm guide](https://agentsroom.dev/ai-coding-swarm)
@@ -213,7 +213,7 @@ Services specifically built for running AI agent workloads in the cloud.
 - **What**: Rebranded from Gitpod (September 2025), pivoted from CDE to "mission control for AI engineering agents." Acquired by OpenAI (June 11, 2026) for Codex integration.
 - **Remote relevance**: Built secure cloud execution and orchestration technology. OpenAI described the acquisition as enabling Codex to "take on longer-running work, even when laptops are closed."
 - **Pricing**: N/A (now part of OpenAI/Codex).
-- **Open source**: Gitpod Flex is self-hosted only (AWS initially). Classic SaaS shut down October 2025.
+- **Open source**: Gitpod Classic was open source (self-hosted repo archived April 2026); Ona/Gitpod Flex was only partially open source, and future source availability under OpenAI is closed/unclear.
 - **Self-hostable**: Gitpod Flex was; Ona's future under OpenAI is unclear.
 - **Key differentiator**: Enterprise governance (Ona Guardrails), autonomous background agents, workflow automations. Now powers Codex's cloud execution.
 - **Link**: Previously ona.dev | [OpenAI acquisition announcement](https://tech-insider.org/ie/openai-ona-acquisition-codex-2026/)
@@ -289,7 +289,7 @@ Services specifically built for running AI agent workloads in the cloud.
 
 - **What**: Composable APIs for building and deploying cloud-hosted agents at scale, with sandboxed execution, checkpointing, credential management, scoped permissions, and end-to-end tracing. Launched April 8, 2026 (public beta).
 - **Remote relevance**: First frontier model provider to own the infrastructure layer for agent execution. Each agent runs in a gVisor-isolated container. Network egress default-deny.
-- **Pricing**: Part of Claude Platform. Pricing via API usage.
+- **Pricing**: Part of Claude Platform. Pricing via API usage (standard Claude token pricing) plus $0.08 per session-hour for the managed sandbox environment.
 - **Open source**: No (managed platform).
 - **Self-hostable**: Split-plane. The agent loop (orchestration, context management, error recovery) stays on Anthropic infrastructure. Tool execution can run on customer infrastructure via self-hosted sandboxes (GA May 2026) — supports Cloudflare, Daytona, Modal, Vercel, or a custom sandbox API for customer-controlled execution environments. Workers still poll Anthropic's control plane and submit results to it; this is not an air-gapped deployment. ([Self-hosted sandboxes docs](https://platform.claude.com/docs/en/managed-agents/self-hosted-sandboxes))
 - **Key differentiator**: Developers don't write the agent loop, provision sandboxes, or wire up error recovery, checkpointing, or credential vaulting -- Anthropic handles it all.
@@ -549,7 +549,7 @@ Multiple guides exist for turning a spare Mac into a dedicated agent server:
 | **Modal** | Pay-per-use | gVisor containers, GPU support |
 | **Fly.io Machines** | From $0.0028/hr (256MB base); ~$0.03/hr (4GB agent) | 35+ regions, <300ms boot |
 | **Fly.io Sprites** | Auto-idle billing | Persistent, 100GB NVMe, checkpoint/restore |
-| **Northflank** | $0.01667/vCPU-hour | 100k concurrent sandboxes |
+| **Northflank** | $0.01667/vCPU-hr + $0.00833/GB-hr (~$0.05/hr for 1 vCPU/4GB) | 100k concurrent sandboxes |
 | **Vercel Sandbox** | Free tier (5 CPU hours) | Single region (US East) |
 | **boxd** | Not disclosed | Sub-ms resume |
 | **Blaxel** | Not disclosed | Zero idle cost |
@@ -573,7 +573,7 @@ Multiple guides exist for turning a spare Mac into a dedicated agent server:
 | **On-demand with suspend/resume** (Fly Sprites) | Pay only while active | Bursty agent usage, idle 95% of time |
 | **Spot instances** | 60-90% off on-demand | Fault-tolerant batch agent work |
 | **Spare Mac Mini M4** | One-time ~$500-800 | Heavy daily use, amortized quickly |
-| **Claude Managed Agents** | Per-API-call | Zero infrastructure management |
+| **Claude Managed Agents** | Tokens + $0.08/session-hr | Zero infrastructure management |
 
 ### Cost Optimization Strategies
 
@@ -614,11 +614,11 @@ Multiple guides exist for turning a spare Mac into a dedicated agent server:
 | Modal | gVisor containers | Fast | No | Yes | No | Pay-per-use |
 | Fly Machines | KVM VM | <300ms | Yes | Yes | No | From $0.0028/hr (256MB); ~$0.03/hr (4GB) |
 | Fly Sprites | Firecracker microVM | Seconds | Yes (100GB) | No | No | Auto-idle |
-| Northflank | Kata/gVisor | Fast | Yes | Yes (H100) | BYOC/BYOK | $0.017/vCPU-hr |
+| Northflank | Kata/gVisor | Fast | Yes | Yes (H100) | BYOC/BYOK | $0.017/vCPU-hr + $0.008/GB-hr (~$0.05/hr) |
 | Vercel Sandbox | Firecracker microVM | Fast | No | No | No | Free tier |
 | boxd | KVM microVM | 30ms boot, sub-ms resume | Yes | No | Yes (single binary) | Unknown |
 | Blaxel | microVM | Fast | Yes (perpetual standby) | No | No | Unknown |
-| Claude Managed Agents | gVisor container | N/A | Checkpointed | No | Split-plane (execution only) | Per-API-call |
+| Claude Managed Agents | gVisor container | N/A | Checkpointed | No | Split-plane (execution only) | Tokens + $0.08/session-hr |
 | Codex Cloud | Cloud sandbox | N/A | Per-task | No | No | ChatGPT sub |
 
 ### Orchestration & Workflow Tools
