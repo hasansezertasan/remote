@@ -368,7 +368,7 @@ Task assignment -> Repo clone in cloud VM -> Dependency installation -> Implemen
 
 **Ticket intake:** Cursor IDE, Slack, Linear, GitHub, PagerDuty, generic webhooks. "Automations" enable always-on agents triggered by external events or schedules.
 
-**CI feedback loop:** Agent reads codebase, edits, runs terminal commands, watches output, iterates until done or hits guardrail.
+**CI feedback loop:** Partial (runs terminal commands and tests in cloud VM sandbox during execution, watches output, and iterates; does not monitor external post-PR CI).
 
 **Review feedback handling:** No (PRs include screenshots/video for human reviewers; standard manual review flow, no automated comment-response loop).
 
@@ -481,14 +481,14 @@ Task assignment -> Repo clone in cloud VM -> Dependency installation -> Implemen
 | **Optio** | Yes | Yes (auto-resume) | Yes (subtask agent) | GitHub, Linear, Jira, Notion, GitLab | MIT | Yes (K8s) | Free |
 | **Warp Factories** | Yes | Partial (computer-use verify) | Yes (review agent) | Slack, Linear, Jira, GitHub | No | Yes (Enterprise VPC) | Closed beta ($10K credit) |
 | **GitHub Copilot Agent** | Yes | Yes (Actions sandbox) | Yes (iterates on feedback) | GitHub Issues only | No | No | $10/mo (Pro) |
-| **Google Jules** | Yes | Partial (sandbox tests only, no post-PR CI) | Partial (PR only, no auto-response) | GitHub Issues, web | No | No | Free (15 tasks/day) |
+| **Google Jules** | Partial | Partial (sandbox tests only, no post-PR CI) | Partial (PR only, no auto-response) | GitHub Issues, web | No | No | Free (15 tasks/day) |
 | **Devin** | Yes | Yes (sandbox + browser) | Yes (PR analysis) | Slack, Teams, GitHub, Linear, Jira, web | No | No | Free / $20/mo (Pro) |
 | **Cosine (Lumen)** | Partial | Partial (runs checks) | Partial (reviewable changes) | Web, IDE | No | Yes (air-gapped) | $20/seat/mo |
 | **Codegen (ClickUp)** | Yes | No (channel updates only) | Yes (line-by-line review) | ClickUp, Slack, Linear, Jira | No | Enterprise only | Deprecated standalone |
 | **Factory (Droids)** | Yes | Yes (tests + iterates) | Yes (adjustable autonomy) | Slack, Linear, Terminal, IDE, web | No | Enterprise only | $20/mo |
 | **Claude Managed Agents** | Infrastructure | Depends on agent (no built-in CI watcher) | Depends on agent | Programmatic API | No | Split-plane (execution only) | API tokens + $0.08/session-hr |
 | **OpenAI Codex Cloud** | Yes | Partial (sandbox only, no post-PR CI) | Yes (responds to tags) | ChatGPT, GitHub bot, CLI, IDE | CLI only (Apache 2.0) | No | $20/mo (Plus); $100-$200/mo (Pro) |
-| **Cursor Cloud Agents** | Yes | Yes (iterates in VM) | No (manual review; video/screenshot artifacts) | IDE, Slack, Linear, GitHub, PagerDuty | No | No | $20/mo (Pro) |
+| **Cursor Cloud Agents** | Partial | Partial (sandbox tests only, no post-PR CI) | No (manual review; video/screenshot artifacts) | IDE, Slack, Linear, GitHub, PagerDuty | No | No | $20/mo (Pro) |
 | **OpenHands** | Mostly | Partial (sandbox tests only, no post-PR CI) | No (human review; clean commits) | GitHub Issues, NL specs | MIT | Yes | Free |
 | **Gastown** | Orchestrator only | No | No | Manual / Beads | MIT | Yes | Free (+~$100/hr tokens) |
 | **oh-my-claudecode** | Orchestrator only | No | No | Natural language | Yes | Yes | Free |

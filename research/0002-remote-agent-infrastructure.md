@@ -66,7 +66,7 @@ Tools for managing fleets of AI coding agents -- running, monitoring, and coordi
 ### Codeman
 
 - **What**: Self-hosted mission control for AI coding agents with real-time xterm.js terminals at 60fps, per-session token/cost tracking, and tab-based navigation.
-- **Remote relevance**: Sessions run inside tmux and survive server restarts, network drops, and machine sleep. Background daemon and service install capabilities for always-on operation.
+- **Remote relevance**: Sessions run inside tmux and survive client disconnects, network drops, and server restarts. Note that host machine sleep suspends process execution (like all tmux sessions) unless system sleep is explicitly prevented via sleep inhibitors (e.g., `caffeinate` or systemd power profiles). Background daemon and service install capabilities for always-on operation.
 - **Pricing**: Free.
 - **Open source**: Yes. [github.com/Ark0N/Codeman](https://github.com/Ark0N/Codeman)
 - **Self-hostable**: Yes, designed for self-hosting.
@@ -201,12 +201,12 @@ Services specifically built for running AI agent workloads in the cloud.
 
 - **What**: Enterprise AI Agent Cloud -- isolated Firecracker microVM sandboxes for AI agents to execute code, analyze data, and operate virtual computers.
 - **Remote relevance**: SDKs (Python, JS/TS) let agents provision sandboxes on demand with terminal, filesystem, Git, and network access.
-- **Pricing**: $37M+ total funding. Pay-per-use model. Free tier available.
+- **Pricing**: Pay-per-use compute billed per wall-clock second: $0.000014/vCPU-second (~$0.0504/vCPU-hour) and $0.0000045/GiB-second (~$0.0162/GiB-hour). Hobby tier is free with $100 credits (1-hour max session, 20 concurrent sandboxes); Pro tier is $150/month base fee + compute (24-hour max session, 100 concurrent sandboxes).
 - **Open source**: SDK and templates are open-source; infrastructure is managed.
 - **Self-hostable**: No (managed cloud), but custom templates supported.
 - **Key differentiator**: Firecracker microVM boot in <200ms, 10,000+ teams, focused exclusively on "isolated computers for agents" (not a general cloud).
 - **Link**: [e2b.dev](https://e2b.dev/)
-- **Notable**: [AgentMarketCap comparison](https://agentmarketcap.ai/blog/2026/04/07/ai-agent-sandbox-infrastructure-e2b-modal-daytona-fly-machines-secure-code-execution) | [Northflank E2B vs Modal comparison](https://northflank.com/blog/e2b-vs-modal)
+- **Notable**: Raised $37M+ total funding. [AgentMarketCap comparison](https://agentmarketcap.ai/blog/2026/04/07/ai-agent-sandbox-infrastructure-e2b-modal-daytona-fly-machines-secure-code-execution) | [Northflank E2B vs Modal comparison](https://northflank.com/blog/e2b-vs-modal)
 
 ### Ona (formerly Gitpod) -- Acquired by OpenAI
 
@@ -245,7 +245,7 @@ Services specifically built for running AI agent workloads in the cloud.
 
 - **What**: KVM hardware-isolated VMs (Machines) controlled via REST API, plus Sprites -- Firecracker-based lightweight VMs specifically designed for coding agents (launched January 2026).
 - **Remote relevance**: Machines boot in <300ms, run in 35+ regions. Sprites are persistent with 100GB NVMe storage, auto-idle billing, checkpoint/restore in ~300ms. Designed for agents that need a warm environment between sessions.
-- **Pricing**: Machines: $0.0028/hour for a usable instance. Sprites: idle billing stops when not in use.
+- **Pricing**: Machines: starts at $0.0028/hour (minimal 256MB shared-CPU starting SKU); a viable coding-agent instance meeting the 4 GB RAM budget runs ~$0.028–$0.031/hour (~$21–$23/month on shared CPU) or ~$0.06/hour on dedicated Performance CPU. Extra RAM is billed at ~$5.00/GB/month ($0.0069/GB-hour). Sprites: auto-idle billing stops compute charges when not in use.
 - **Open source**: No (managed platform).
 - **Self-hostable**: No.
 - **Key differentiator**: Sprites' suspend/resume is the killer feature for bursty agents. Full Docker ecosystem. Multi-region (35+ regions). GPU support.
@@ -544,10 +544,10 @@ Multiple guides exist for turning a spare Mac into a dedicated agent server:
 
 | Service | Pricing Model | Key Metric |
 |---------|--------------|------------|
-| **E2B** | Pay-per-use, free tier | <200ms microVM boot |
+| **E2B** | $0.0504/vCPU-hr + $0.0162/GB-hr (Free tier with $100 credit; Pro $150/mo) | <200ms microVM boot |
 | **Daytona** | Enterprise contracts | <60ms provisioning |
 | **Modal** | Pay-per-use | gVisor containers, GPU support |
-| **Fly.io Machines** | $0.0028/hour | 35+ regions, <300ms boot |
+| **Fly.io Machines** | From $0.0028/hr (256MB base); ~$0.03/hr (4GB agent) | 35+ regions, <300ms boot |
 | **Fly.io Sprites** | Auto-idle billing | Persistent, 100GB NVMe, checkpoint/restore |
 | **Northflank** | $0.01667/vCPU-hour | 100k concurrent sandboxes |
 | **Vercel Sandbox** | Free tier (5 CPU hours) | Single region (US East) |
@@ -609,10 +609,10 @@ Multiple guides exist for turning a spare Mac into a dedicated agent server:
 
 | Platform | Isolation | Boot Time | Persistent | GPU | Self-Host | Pricing |
 |----------|-----------|-----------|------------|-----|-----------|---------|
-| E2B | Firecracker microVM | <200ms | No (ephemeral) | No | No | Pay-per-use |
+| E2B | Firecracker microVM | <200ms | No (ephemeral) | No | No | $0.0504/vCPU-hr + $0.0162/GB-hr |
 | Daytona | Docker containers | <60ms | Yes | No | Was yes (now closed source) | Enterprise |
 | Modal | gVisor containers | Fast | No | Yes | No | Pay-per-use |
-| Fly Machines | KVM VM | <300ms | Yes | Yes | No | $0.0028/hr |
+| Fly Machines | KVM VM | <300ms | Yes | Yes | No | From $0.0028/hr (256MB); ~$0.03/hr (4GB) |
 | Fly Sprites | Firecracker microVM | Seconds | Yes (100GB) | No | No | Auto-idle |
 | Northflank | Kata/gVisor | Fast | Yes | Yes (H100) | BYOC/BYOK | $0.017/vCPU-hr |
 | Vercel Sandbox | Firecracker microVM | Fast | No | No | No | Free tier |
