@@ -27,7 +27,7 @@ This document surveys the landscape of remote and cloud development environments
 | **Coder** | Self-hosted | Yes (AGPL) | Yes | Community free; Premium custom | Infrastructure-agnostic Terraform templates |
 | **DevPod** | Client-side tool | Yes (MPL-2.0) | N/A (client-only) | Free | No server needed; any provider; devcontainer standard |
 | **Eclipse Che / OpenShift Dev Spaces** | Self-hosted | Yes (EPL-2.0) | Yes (K8s/OpenShift) | Che free; Dev Spaces with OpenShift subscription | Kubernetes-native, enterprise Red Hat support |
-| **Daytona** | Managed (was OSS) | No (closed June 2026; archived v0.190.0 is AGPL-3.0) | No | Unknown (pivoted to AI sandbox) | Was OSS; now closed-source AI code execution platform |
+| **Daytona** | Managed (was OSS) | No (closed June 2026; archived v0.190.0 is AGPL-3.0) | No (managed); yes (archived v0.190.0) | Unknown (pivoted to AI sandbox) | Was OSS; now closed-source AI code execution platform |
 | **DevZero** | Managed SaaS | No | No | From $39.95/user/mo (may have pivoted) | Production-mirroring MicroVM environments |
 | **Codeanywhere** | Managed SaaS | No | No | Free 20hrs; Basic $12/mo; Premium $29/mo | Browser IDE, 75+ languages |
 | **CodeSandbox** | Managed SaaS | No | No | Free tier; Pro from $12/user/mo; compute usage-based | Snapshot/forking-first; Together AI backed |
@@ -231,7 +231,7 @@ Was an open-source dev environment manager. Pivoted to AI code execution infrast
 
 - **Pricing**: The open-source repo is frozen at v0.190.0 and unmaintained. The commercial platform continues at app.daytona.io.
 - **License**: AGPL-3.0 (for archived v0.190.0 open-source release; unmaintained "as is")
-- **Self-hostable**: No longer (commercial Daytona only)
+- **Self-hostable**: No longer for the commercial platform (managed service / enterprise deployment); legacy open-source release (frozen at v0.190.0) remains runnable/self-hostable but unmaintained without security updates
 - **Key differentiator**: Was a strong OSS CDE; now positioned as "secure infrastructure for running AI-generated code"
 - **Repo**: [github.com/daytonaio/daytona](https://github.com/daytonaio/daytona) (frozen, no further updates)
 - **Site**: [daytona.io](https://www.daytona.io/)
