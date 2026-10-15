@@ -206,6 +206,22 @@ network" case. This repo handles everything else:
   handle review feedback, and iterate until merge. Covers Optio, Warp Factories,
   Copilot Coding Agent, Jules, Devin, Cosine/Lumen, Factory, and more.
 
+- [CloudTop for Non-Googlers (Oct 2026)](research/0004-cloudtop-alternatives.md)
+  — What public sources suggest Google's CloudTop is (a persistent per-engineer
+  datacenter Linux VM with thin-client access via SSH/remote VS Code and
+  BeyondCorp), and how to get the equivalent: DIY (VPS/GCE + Tailscale + tmux/mosh + `code tunnel`),
+  deployables (Coder, webtop/Selkies, Kasm), paid (Cloud Workstations,
+  exe.dev, Codespaces), and OSS building blocks, with a coverage matrix.
+
+- [T3 Code, bb and Orca: The Agent Layer for an "AI Shed" (Oct 2026)](research/0005-t3-bb-orca.md)
+  — Which agent control plane should run on an always-on shed (DHH's "AI shed"
+  idea, i.e. 0004's CloudTop on hardware you own). Scores T3 Code, bb and Orca,
+  with herdr as reference, against a 10-point shed checklist: headless Linux,
+  surviving client disconnects and updates, boot services, Tailscale and
+  managed relays, mobile, worktrees, multi-shed and cloud sandboxes.
+  Recommends Orca as the cockpit with a hand-written systemd unit, T3 Code as
+  an optional second surface, and watching bb.
+
 - [Remote/Cloud Dev Environments (Sep 2026)](research/0001-remote-dev-environments.md)
   — Earlier survey of traditional CDEs (editors, IDEs, Codespaces, Coder,
   DevPod, etc.). Useful background but not the core problem — "dev environment"
