@@ -207,9 +207,9 @@ network" case. This repo handles everything else:
   Copilot Coding Agent, Jules, Devin, Cosine/Lumen, Factory, and more.
 
 - [CloudTop for Non-Googlers (Oct 2026)](research/0004-cloudtop-alternatives.md)
-  — What Google's CloudTop (persistent per-engineer datacenter Linux VM,
-  thin-client access via SSH/remote VS Code, BeyondCorp) actually is, and how
-  to get the equivalent: DIY (VPS/GCE + Tailscale + tmux/mosh + `code tunnel`),
+  — What public sources suggest Google's CloudTop is (a persistent per-engineer
+  datacenter Linux VM with thin-client access via SSH/remote VS Code and
+  BeyondCorp), and how to get the equivalent: DIY (VPS/GCE + Tailscale + tmux/mosh + `code tunnel`),
   deployables (Coder, webtop/Selkies, Kasm), paid (Cloud Workstations,
   exe.dev, Codespaces), and OSS building blocks, with a coverage matrix.
 

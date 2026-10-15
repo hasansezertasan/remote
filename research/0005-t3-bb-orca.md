@@ -429,7 +429,7 @@ phone.
 The user already lives in Orca, and it covers S1, S2, S5, S7 and S8 with the
 largest community. On the shed:
 
-1. Run `orca-ide serve --port 6768 --pairing-address <tailnet-ip>` under a
+1. Run `orca-ide serve --port 6768 --pairing-address <tailnet-ip> --mobile-pairing` under a
    **hand-written systemd user unit with linger** (`loginctl enable-linger`).
    This fills the S4 gap: `orca serve` only runs in the foreground. On Linux
    the CLI is `orca-ide`, because GNOME Orca's screen reader owns
