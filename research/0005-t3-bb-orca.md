@@ -300,7 +300,7 @@ local, **SSH target**, **Remote Orca Server**, and **Cloud VM**
 - **Remote Orca Server (S1/S2/S7):** "The server keeps the projects,
   worktrees, terminals, tabs, provider accounts, and agent sessions." Laptop,
   browser and phone pair to it. The recommended path is "desktop app +
-  Tailscale". Headless hosts use `orca serve --pairing-address <tailnet-ip>`,
+  Tailscale". Headless hosts use `orca serve --pairing-address <tailnet-ip>` (`orca-ide serve` on Linux),
   with `--mobile-pairing` for a phone QR. Each client gets "a separate,
   revocable token". **Marked "Beta"**
   ([Remote Orca Servers](https://www.onorca.dev/docs/remote-servers)).
@@ -429,9 +429,14 @@ phone.
 The user already lives in Orca, and it covers S1, S2, S5, S7 and S8 with the
 largest community. On the shed:
 
-1. Run `orca serve --port 6768 --pairing-address <tailnet-ip>` under a
+1. Run `orca-ide serve --port 6768 --pairing-address <tailnet-ip>` under a
    **hand-written systemd user unit with linger** (`loginctl enable-linger`).
-   This fills the S4 gap: `orca serve` only runs in the foreground.
+   This fills the S4 gap: `orca serve` only runs in the foreground. On Linux
+   the CLI is `orca-ide`, because GNOME Orca's screen reader owns
+   `/usr/bin/orca`. The bare `orca` shim exists only while the server is
+   starting, so it can't be the unit's `ExecStart`. Use `orca-ide` or the
+   absolute AppImage path
+   ([Remote Orca Servers](https://github.com/stablyai/orca/blob/main/docs/site/content/docs/remote-servers.mdx)).
 2. Pair the MacBook as a client (Remote Orca Server), and the phone with
    `--mobile-pairing`.
 3. Use SSH worktrees as the fallback when the Remote Server beta misbehaves.
